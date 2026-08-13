@@ -1,0 +1,97 @@
+{
+  "symbol": "PANW",
+  "method": "comps",
+  "anchor": "FY2027",
+  "peer_group": "Scaled security platforms (CrowdStrike, Zscaler, Fortinet, Check Point)",
+  "peers_intro": "Forward multiples for the four scaled security platforms PANW is actually compared against. Note how wide the range is: the cohort spans a no-growth incumbent to a hyper-growth cloud name, so these bracket the answer rather than set it. EV/FCF is derived as EV/Sales ÷ free-cash-flow margin, so it is on the same basis for every name.",
+  "figures_intro": "PANW's fiscal year ends 31 July, so FY2027 is the first full year that includes CyberArk. Revenue and free cash flow are analyst consensus (51 analysts); non-GAAP EPS is derived from consensus revenue at the company's own margin targets, because consensus EPS on a GAAP basis is not comparable to the peer P/Es above. Deliberately, no GAAP earnings figure is used anywhere in this model.",
+  "fundamentals_source": "FY2027 revenue $13.83B and adjusted free cash flow $5.25B are analyst consensus. Non-GAAP EPS $4.05 is derived, not consensus: $13.83B revenue × 30% non-GAAP operating margin (FY2026 guidance was 28.9–29.2%, with a stated long-term target in the low-to-mid 30s), plus ~$0.15B other income, taxed at PANW's 22% non-GAAP rate, over ~825M diluted shares. For context, consensus GAAP net income for the same year is only $1.53B — roughly a third of free cash flow — which is exactly why a GAAP P/E on this stock reads above 100× and carries no information.",
+  "peers": [
+    {
+      "name": "CrowdStrike",
+      "ev_fcf": 63,
+      "ev_sales": 18.8,
+      "pe": 93
+    },
+    {
+      "name": "Zscaler",
+      "ev_fcf": 53,
+      "ev_sales": 13.3
+    },
+    {
+      "name": "Fortinet",
+      "ev_fcf": 31,
+      "ev_sales": 10.3,
+      "pe": 30
+    },
+    {
+      "name": "Check Point",
+      "ev_fcf": 13,
+      "ev_sales": 4.8
+    }
+  ],
+  "balance_sheet": {
+    "net_cash": "5.6B",
+    "diluted_shares": "825M"
+  },
+  "multiples": [
+    "ev_fcf",
+    "ev_sales",
+    "pe"
+  ],
+  "core_multiples": [
+    "ev_fcf"
+  ],
+  "scenarios": [
+    {
+      "name": "Base",
+      "probability": 1,
+      "fundamentals": {
+        "fcf": "5.25B",
+        "revenue": "13.83B",
+        "eps": 4.05
+      },
+      "multiples": {
+        "ev_fcf": 30,
+        "ev_sales": 11.5,
+        "pe": 47
+      }
+    }
+  ],
+  "market": {
+    "price": 394.16,
+    "as_of": "2026-08-13",
+    "commentary": "Close on 13 August 2026, at an all-time high and up roughly 114% year to date. Shown here only to be explained, not to be beaten: the fair value above is computed without reference to it."
+  },
+  "expectations": {
+    "horizon": "FY2030",
+    "years_to_horizon": 4,
+    "compound_years": 3,
+    "discount_rate": 0.08,
+    "balance_sheet": {
+      "net_cash": "15B",
+      "diluted_shares": "850M"
+    },
+    "commentary": "Each path takes the FY2027 revenue above, compounds it three years to FY2030, applies a free-cash-flow margin, and solves for the one number left over: the multiple PANW would still have to command in 2030 for today's price to be right. FY2030 is the horizon because it is the company's own planning horizon — management targets $20B of next-generation-security ARR by then, raised from $15B.",
+    "paths": [
+      {
+        "name": "Consensus-ish",
+        "revenue_cagr": 0.15,
+        "fcf_margin": 0.4,
+        "comment": "Growth decelerating from 21% to mid-teens as the CyberArk contribution laps, at the company's stated 40% FCF margin."
+      },
+      {
+        "name": "Company plan ($20B ARR)",
+        "revenue_cagr": 0.2,
+        "fcf_margin": 0.4,
+        "comment": "Management's own FY2030 plan delivered in full: $20B NGS ARR plus legacy revenue is roughly $24B total, at the 40% margin target."
+      },
+      {
+        "name": "Plan + margin upside",
+        "revenue_cagr": 0.2,
+        "fcf_margin": 0.45,
+        "comment": "The plan delivered and cash conversion pushed five points past the target — about as good as this business plausibly gets."
+      }
+    ]
+  }
+}

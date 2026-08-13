@@ -1,0 +1,60 @@
+{
+  "symbol": "PANW",
+  "drivers": [
+    {
+      "key": "fcf",
+      "label": "Free cash flow $5.25B",
+      "comment": "The anchor of this model, and the reason it is not built on earnings. FY2027 consensus adjusted free cash flow is 38% of revenue, against roughly 27% for the scaled security cohort and the company's own reaffirmed target of 40% by FY2028. Consensus GAAP net income for the same year is $1.53B — under a third of this figure — so cash flow and reported profit tell completely different stories, and the cash figure is the one with economic content."
+    },
+    {
+      "key": "mult_ev_fcf",
+      "label": "EV/FCF 30×",
+      "comment": "The single most important judgment on the page, and the weakest link. The peer set gives almost no discipline: Check Point sits near 13× on ~6% growth, Fortinet ~31×, Zscaler ~53×, CrowdStrike ~63×. PANW belongs above Fortinet — it grows faster (~21% vs ~13%) and converts more of revenue to cash (38% vs ~33%) — and below the cloud-native pair, whose growth is fully organic. That argues 35–45× on peer logic alone; 30× is deliberately below it, because roughly a third of PANW's FY2027 growth is bought rather than grown, and because of the stock-comp point below. At 40× this row alone implies $261, taking the three-multiple average to about $217; raise all three multiples consistently and it is about $260."
+    },
+    {
+      "key": "sbc",
+      "label": "Stock comp is added back — the biggest caveat",
+      "comment": "\"Adjusted\" free cash flow adds back stock-based compensation, which for PANW runs on the order of $1.5–2.0B a year after CyberArk. That is a real cost to owners, paid in shares rather than cash. Charge it and FY2027 free cash flow drops to roughly $3.3–3.8B — a 24–27% margin, in line with the cohort rather than best-in-class — and the same 30× puts the cash-flow row at roughly $127–145 a share, against $198 as it stands. The peer multiples above are computed on the same added-back basis, so the comparison is apples-to-apples, but the whole cohort is flattered together. Treat $196 as the peer-consistent number and this as the owner-economics floor."
+    },
+    {
+      "key": "revenue",
+      "label": "Revenue $13.83B",
+      "comment": "Consensus across 51 analysts, and the firmest input here — FY2026 closed at about $11.42B (24% growth) and CyberArk only contributed from 11 February 2026, so FY2027 picks up the missing months mechanically. Roughly 21% headline growth, of which about 14 points are organic."
+    },
+    {
+      "key": "mult_ev_sales",
+      "label": "EV/Sales 11.5×",
+      "comment": "The best-evidenced multiple on the page. Sector work puts the public network-security cohort median near 11× forward revenue, with software-led NGFW platforms at 9–12×, SSE/ZTNA at 11–15× and identity security at 11–14×. PANW spans all three, so the middle of that blend is 11–12×. It is also consistent with the EV/FCF row: 11.5× revenue ÷ a 38% cash margin is 30× cash flow, which is why the two rows nearly agree — they are two views of one assumption, not independent confirmation."
+    },
+    {
+      "key": "eps",
+      "label": "Non-GAAP EPS $4.05 (derived)",
+      "comment": "Not a consensus figure — built from consensus revenue at 30% non-GAAP operating margin, 22% tax and ~825M shares. It is here so the model can speak to the peer P/Es, not because it adds information beyond the cash-flow rows. Any GAAP P/E for PANW is noise: the company posted a GAAP net loss in Q3 FY2026 while generating $910M of cash that quarter."
+    },
+    {
+      "key": "mult_pe",
+      "label": "P/E 47×",
+      "comment": "Set to sit between Fortinet (~30×) and CrowdStrike (~93×), nearer the low end for the same reasons as the cash multiple. Contributes the lowest of the three implied prices, so it pulls the average down slightly."
+    },
+    {
+      "key": "net_cash",
+      "label": "Net cash $5.6B",
+      "comment": "From the 30 April 2026 balance sheet: $3.1B cash and short-term investments plus $3.9B long-term investments, less $1.36B of convertible notes. Already reflects the ~$2.2B cash portion of CyberArk. This is a quarter stale and no FY2027 cash build is credited, so it is mildly conservative; it moves the answer by only a few dollars a share either way."
+    },
+    {
+      "key": "shares",
+      "label": "Diluted shares 825M",
+      "comment": "Q3 FY2026 non-GAAP diluted count was 807M, already including the ~110M shares issued for CyberArk. 825M assumes modest net dilution into FY2027 — stock comp issuance partly offset by buybacks. Understating this flatters the per-share figure, so it is worth watching each quarter."
+    },
+    {
+      "key": "peer_range",
+      "label": "How much the peer set really constrains this",
+      "comment": "Honestly: very little. The cohort spans 13× to 63× EV/FCF and 4.8× to 18.8× revenue, a four-to-five-fold spread driven by growth rate and perceived durability, not by a sector multiple. Anyone can land anywhere in that band and cite a peer. The peers are shown as a sanity band; the multiple is a judgment, and the fair value should be read as a function of it rather than as an output."
+    },
+    {
+      "key": "probability",
+      "label": "Single case, no probability weighting",
+      "comment": "Deliberately one Base case at 100%, matching the house style for comps reports. That means the page shows no bear/bull dispersion, which understates the real uncertainty — the two sensitivities that matter are stated numerically above instead: a 40× cash multiple takes the average to about $217 (about $260 if all three multiples move with it), and charging stock comp against cash flow takes the cash-flow row to about $127–145."
+    }
+  ]
+}
