@@ -3,13 +3,19 @@
 Dated, back-of-the-envelope **intrinsic-value reports** for stocks — one HTML
 page per stock, per date, published as a static site via GitHub Pages.
 
-Each report is **valuation only** — no market price. The page ships the
-*inputs* and computes the value in your browser, so the numbers on the page are
-always a live function of the assumptions it carries.
+Each report's fair value is computed **without reference to the market price**.
+The page ships the *inputs* and computes the value in your browser, so the
+numbers on the page are always a live function of the assumptions it carries.
+
+A report may additionally carry an **implied-expectations** section, which runs
+the model backwards — taking the traded price as given and solving for the
+multiple or growth path you would have to believe to justify it. It sits after
+the valuation and never feeds into it.
 
 Two methods share one pipeline, selected by the input's `method` field: a
 **DCF** (FCFF) for durable compounders, and a **relative comps** model
-(peer/re-rating multiples — P/E, EV/EBITDA, P/B, EV/Sales on a forward metric)
+(peer/re-rating multiples — P/E, EV/EBITDA, P/B, EV/Sales, EV/FCF on a
+forward metric)
 for cyclicals and "new-paradigm" re-ratings where a smooth cash-flow stream is a
 poor fit (e.g. MU). Both obey the same rules below.
 

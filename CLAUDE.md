@@ -6,15 +6,18 @@ date, published via GitHub Pages from `main` `/docs`.
 ## Two valuation methods, one pipeline
 
 Each report's input carries a **method**; the generator and the shared landing
-page dispatch on it. Same snapshot rules, same "generator does no math", same
-"valuation only — no market price" for both.
+page dispatch on it. Same snapshot rules, same "generator does no math", and for
+both the fair value is derived without reference to any market price.
 
 - **DCF** (default, no `method` field) — FCFF, port in `docs/assets/dcf.js`,
   inputs under `skills/dcf/reference/`. For durable compounders.
 - **Relative comps** (`"method": "comps"`) — peer/re-rating multiples (P/E,
-  EV/EBITDA, P/B, EV/Sales) on a forward metric, port in `docs/assets/comps.js`,
-  inputs under `skills/relative-comps/reference/`. For cyclicals / "new-paradigm"
-  re-ratings where a smooth FCFF stream is a poor fit (e.g. MU).
+  EV/EBITDA, P/B, EV/Sales, EV/FCF) on a forward metric, port in
+  `docs/assets/comps.js`, inputs under `skills/relative-comps/reference/`. For
+  cyclicals / "new-paradigm" re-ratings where a smooth FCFF stream is a poor fit
+  (e.g. MU), and for high-multiple names whose GAAP earnings are too distorted by
+  stock comp and acquisition amortization to discount (e.g. PANW) — there, anchor
+  on `ev_fcf` and never let a GAAP earnings figure into the model.
 
 The generator resolves `<SYM>.json` from either reference root; the input's
 `method` selects the engine, the page template, and the conventions line.
@@ -53,9 +56,20 @@ change when the shared reference JSON is later updated.
   `docs/assets/comps.js` (port of
   `skills/relative-comps/scripts/comps_calculator.py`, peer multiples). The
   landing page loads both and headlines each report with its own engine.
-- Pages are **valuation only** — never add a live market price. For comps this
-  means no current price, no upside/%-to-target, and no sell-side price targets;
-  peer *multiples* and forward fundamentals are inputs, not a market price.
+- Pages are **valuation only** in the sense that matters: the fair value is
+  always computed *without reference to the market price*. No upside/%-to-target,
+  and no sell-side price targets, ever — those anchor a valuation to a number
+  that is not evidence. Peer *multiples* and forward fundamentals are inputs, not
+  a market price.
+- **The one exception — implied expectations.** A report may carry a `market`
+  block (`price`, `as_of`) and an `expectations` block, which render as clearly
+  separated trailing sections that run the model *backwards*: the price is the
+  input and the required assumption is the output ("what would you have to
+  believe?"). This is allowed because it cannot contaminate the valuation —
+  the fair value is already fixed before the price is read. The rules are:
+  the price must never feed the fair value; the sections must come *after* the
+  valuation, never above it; the conventions line must say the price was not an
+  input; and the page must not turn the comparison into a recommendation.
 - Each input's evaluation lives in the notes `drivers[]` array; the `probability`
   driver is a first-class input and every probability-weighted report should
   carry an honest read on how good its scenario weights are.

@@ -3,6 +3,8 @@
   "method": "comps",
   "anchor": "FY2027",
   "peer_group": "Legacy memory (SK Hynix, Samsung)",
+  "peers_intro": "Today's forward multiples for the closest comparable memory makers. These set the reference range — nothing more; they are not multiplied into the price.",
+  "figures_intro": "For each multiple we take MU's expected FY2027 figure — analyst consensus estimates, not our own forecast — and apply a multiple, chosen using the peer range above as a reference.",
   "fundamentals_source": "The FY2027 figures below are Wall Street analyst consensus estimates — the model does no forecasting of its own. Consensus is unusually split this cycle (FY2027 EPS estimates run from ~$98 to ~$150), so the forward figure is the softest, highest-impact input: change the estimate you feed in and the fair value moves directly.",
   "peers": [
     { "name": "SK Hynix", "pe": 5.4, "ev_ebitda": 7.7, "pb": 3.5, "ev_sales": 6.1 },

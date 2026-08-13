@@ -46,6 +46,15 @@ MANIFEST = REPORTS_DIR / "manifest.json"
 # Per-method conventions line (shown on each page + frozen in the snapshot).
 DCF_CONVENTIONS = "Mid-year discounting convention. Valuation only — no live market price is used."
 COMPS_CONVENTIONS = "Peer-multiple relative valuation — fair value is the average of the per-multiple implied prices. Valuation only — no live market price is used."
+# When an input carries a `market` block the page also runs the model backwards
+# to explain the traded price. The fair value is still derived without it, so the
+# conventions line has to say precisely that rather than claim no price is shown.
+COMPS_REVERSE_CONVENTIONS = (
+    "Peer-multiple relative valuation — fair value is the average of the per-multiple "
+    "implied prices, computed without reference to any market price. The market price "
+    "appears only in the implied-expectations sections, which run the model backwards "
+    "to explain it; it is never an input to the valuation."
+)
 
 
 def is_comps(data):
@@ -53,7 +62,9 @@ def is_comps(data):
 
 
 def conventions_for(data):
-    return COMPS_CONVENTIONS if is_comps(data) else DCF_CONVENTIONS
+    if is_comps(data):
+        return COMPS_REVERSE_CONVENTIONS if data.get("market") else COMPS_CONVENTIONS
+    return DCF_CONVENTIONS
 
 
 def resolve_ref(kind, symbol):
@@ -222,6 +233,48 @@ def render_comps_report(symbol, data, date_str, notes=None, snapshot_name=None):
 
     fv_label = f"Fair value{f' · {anchor}' if anchor else ''}"
 
+    # Both step intros are input-overridable so the page can name the actual
+    # peer cohort and say where the forward figures come from. The defaults stay
+    # generic — nothing here is specific to one stock or sector.
+    peers_intro = data.get("peers_intro") or (
+        "Today's forward multiples for the closest comparable companies. These "
+        "set the reference range — nothing more; they are not multiplied into "
+        "the price."
+    )
+    figures_intro = data.get("figures_intro") or (
+        f"For each multiple we take {sym}'s expected {anchor} figure and apply a "
+        "multiple, chosen using the peer range above as a reference."
+    )
+
+    # Sections 4 and 5 appear only when the input carries a market price. They
+    # are the one place a price is allowed on a page, and they run *backwards*:
+    # the price is the input and the required assumption is the output. The fair
+    # value above is still computed without reference to it.
+    market_section = ""
+    if data.get("market"):
+        market_section = f"""
+  <section>
+    <h2>4 · What the price is actually saying</h2>
+    <p class="meta">Everything above was computed without looking at the market.
+    Here we do the reverse — hold the same {anchor} figures fixed, take the traded
+    price as given, and read off the multiple it implies.</p>
+    <div id="cmp-market"></div>
+  </section>
+"""
+    expect_section = ""
+    if data.get("expectations"):
+        expect_section = """
+  <section>
+    <h2>5 · Reasoning to the price</h2>
+    <p class="meta">A multiple on next year's figures is not the only way to
+    defend a price — you can also be paying today for a later year. So: push the
+    figures out to the company's own planning horizon, discount back, and solve
+    for the one thing left over — the multiple the business would still have to
+    command that far out.</p>
+    <div id="cmp-expect"></div>
+  </section>
+"""
+
     notes_script = ""
     if notes:
         notes_script = f'\n<script type="application/json" id="cmp-notes">{embed_json(notes)}</script>'
@@ -255,29 +308,25 @@ def render_comps_report(symbol, data, date_str, notes=None, snapshot_name=None):
 
   <section>
     <h2>1 · What the peers trade at</h2>
-    <p class="meta">Today's forward multiples for the closest comparable memory
-    makers. These set the reference range — nothing more; they are not multiplied
-    into the price.</p>
+    <p class="meta">{escape(peers_intro)}</p>
     <div id="cmp-peers"></div>
   </section>
 
   <section>
     <h2>2 · Our numbers for {sym}</h2>
-    <p class="meta">For each multiple we take {sym}'s expected {anchor} figure —
-    analyst consensus estimates, not our own forecast — and apply a multiple,
-    chosen using the peer range above as a reference.</p>
+    <p class="meta">{escape(figures_intro)}</p>
     <p class="meta" id="cmp-source"></p>
     <div id="cmp-inputs"></div>
   </section>
 
   <section>
     <h2>3 · How we get the fair value</h2>
-    <p class="meta">Each multiple gives one implied share price — earnings-based
+    <p class="meta">Each multiple gives one implied share price — equity
     multiples directly, EV-based multiples after adding net cash and dividing by
-    shares. The fair value is simply the average of the four.</p>
+    shares. The fair value is the average of those prices.</p>
     <div id="cmp-calc"></div>
   </section>
-
+{market_section}{expect_section}
   <section>
     <h2>Key inputs</h2>
     <div class="table-scroll">
@@ -289,8 +338,9 @@ def render_comps_report(symbol, data, date_str, notes=None, snapshot_name=None):
 
   <footer class="disclaimer">
     <p><strong>Not investment advice.</strong> A relative valuation is only as
-    good as its forward figure and its peer set — and for a cyclical name the
-    figure can be at a cycle peak. The valuation is computed in your browser from
+    good as its forward figure and its peer set — the forward figure can sit at a
+    cycle peak, and a wide peer range can justify almost any answer. The
+    valuation is computed in your browser from
     an embedded input snapshot using the <code>comps</code> engine; it is a
     personal modeling exercise, not a recommendation to buy or sell any
     security.</p>
