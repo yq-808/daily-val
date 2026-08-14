@@ -270,6 +270,127 @@
     }
   },
   {
+    "symbol": "CURI",
+    "date": "2026-08-14",
+    "method": "Sum of the parts (FY2027)",
+    "path": "reports/curi/2026-08-14.html",
+    "snapshot": "reports/curi/2026-08-14.json",
+    "input": {
+      "symbol": "CURI",
+      "method": "sotp",
+      "anchor": "FY2027",
+      "parts_intro": "CuriosityStream reports one segment, but it runs three economically different streams, and the 10-Q discloses enough to separate them. A slowly shrinking subscription business. A licensing business that is genuinely growing. And, sitting inside that licensing line, a large and fast-growing block of trade-and-barter revenue \u2014 content swapped for content, on which no cash ever changes hands. Averaging those into one multiple would bury the only question that matters.",
+      "figures_intro": "Each part's expected FY2027 figure times the multiple that stream deserves on its own merits. The barter block is carried at nil in the bear and base cases: it is real revenue under GAAP, it is not cash, and it cannot pay a dividend.",
+      "fundamentals_source": "Segment splits and the barter block are as reported in the Q2 2026 10-Q (filed 13 Aug 2026) and the FY2025 10-K; the FY2027 figures are our own estimates, extrapolated from those disclosures and management's FY2026 guidance of $77\u201382M revenue.",
+      "balance_sheet": {
+        "net_cash": "10.9M",
+        "diluted_shares": "61.5M"
+      },
+      "parts": [
+        {
+          "key": "subscription",
+          "name": "Subscription, bundled distribution & advertising",
+          "basis": "revenue",
+          "comparable": "No-growth niche SVOD, ~1\u00d7 sales",
+          "note": "Direct-to-consumer is in structural decline ($31.3M in FY2024 \u2192 $23.8M in FY2025); partner/bundled distribution is growing but not fast enough to offset it. Management says outright it is running this for durable economics rather than growth. Includes the small advertising and sponsorship line."
+        },
+        {
+          "key": "licensing_cash",
+          "name": "Content & data licensing \u2014 cash",
+          "basis": "revenue",
+          "comparable": "Content libraries 2\u20133\u00d7; AI-data licensors 4\u20138\u00d7",
+          "note": "Traditional factual-video licensing plus the AI training datasets and the 880-billion-token code corpus \u2014 the part of the licensing line that actually settles in cash. This single number decides the valuation."
+        },
+        {
+          "key": "licensing_barter",
+          "name": "Content licensing \u2014 trade & barter (non-cash)",
+          "basis": "revenue",
+          "comparable": "No cash, no dividend capacity \u2014 carried at nil",
+          "note": "Content-for-content swaps, booked as licensing revenue with the received content capitalised as an asset. FY2025 barter revenue was $12.6M against $18K of matching cost, so it lands almost entirely in gross profit while generating no cash and creating a future amortisation charge."
+        }
+      ],
+      "adjustments": [
+        {
+          "key": "equity_investees",
+          "name": "Equity-method investees, at book",
+          "amount": "3.7M",
+          "comment": "Non-core holdings carried at balance-sheet value."
+        },
+        {
+          "key": "leases",
+          "name": "Operating lease liabilities (debt-like)",
+          "amount": "-3.7M",
+          "comment": "Present value of the office lease commitments, treated as debt."
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Bear",
+          "probability": 0.3,
+          "comment": "The 2025\u201326 data-licensing burst was a one-off sale of a back catalogue, not a business. Buyers who have bought the corpus do not buy it twice; cash licensing falls back toward its pre-boom run rate and the multiple compresses to a library multiple.",
+          "parts": {
+            "subscription": {
+              "amount": "33M",
+              "multiple": 0.8
+            },
+            "licensing_cash": {
+              "amount": "19M",
+              "multiple": 1.5
+            },
+            "licensing_barter": {
+              "amount": "14M",
+              "multiple": 0
+            }
+          }
+        },
+        {
+          "name": "Base",
+          "probability": 0.45,
+          "comment": "Cash licensing keeps growing, but at the pace the cash line has actually shown rather than the pace the headline suggests: roughly $25M in FY2026 to $27M in FY2027. Subscription erodes a few percent. Barter keeps inflating reported revenue and is worth nothing.",
+          "parts": {
+            "subscription": {
+              "amount": "35M",
+              "multiple": 1.0
+            },
+            "licensing_cash": {
+              "amount": "27M",
+              "multiple": 2.5
+            },
+            "licensing_barter": {
+              "amount": "18M",
+              "multiple": 0
+            }
+          }
+        },
+        {
+          "name": "Bull",
+          "probability": 0.25,
+          "comment": "The 17 productised datasets and the code corpus turn out to be a repeatable franchise with a renewing customer base rather than a catalogue clearance \u2014 cash licensing compounds to $42M and earns a data-licensor multiple. Some of the barter is genuinely convertible into cash later.",
+          "parts": {
+            "subscription": {
+              "amount": "36M",
+              "multiple": 1.2
+            },
+            "licensing_cash": {
+              "amount": "42M",
+              "multiple": 5.0
+            },
+            "licensing_barter": {
+              "amount": "20M",
+              "multiple": 0.3
+            }
+          }
+        }
+      ],
+      "market": {
+        "price": 3.99,
+        "as_of": "2026-08-13",
+        "solve_for": "licensing_cash",
+        "commentary": "The price is not an input to anything above. Read the other way: crediting the subscription business and the cash at our own figures, the market is paying roughly 7.4\u00d7 FY2027 cash licensing revenue \u2014 or, at our 2.5\u00d7, it is assuming about $80M of cash licensing revenue against our $27M. Cash licensing in the first half of 2026 was $10.9M, down from $11.3M a year earlier. Getting to $80M is not an extrapolation of that line; it is a different business."
+      }
+    }
+  },
+  {
     "symbol": "GOOGL",
     "date": "2026-07-14",
     "method": "DCF \u2014 FCFF, probability-weighted scenarios",

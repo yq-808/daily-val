@@ -1,0 +1,72 @@
+{
+  "symbol": "CURI",
+  "as_of": "2026-08-14",
+  "drivers": [
+    {
+      "key": "licensing_cash",
+      "label": "Cash licensing, FY2027 $27M",
+      "verdict": "weak evidence",
+      "comment": "This is the number the valuation turns on, and it is the one the headline hides. Reported licensing rose 48% in Q2 to $14.1M — but trade and barter inside that line went from $1.9M to $5.3M, so licensing that settles in cash went from $7.6M to $8.8M, up 15%. Over the first half the cash line actually shrank: $10.9M against $11.3M a year earlier, while reported licensing rose 35%. We assume management's guided second-half ramp is real and carry $25M for FY2026 and $27M for FY2027; that is already an act of faith relative to the half-year run rate."
+    },
+    {
+      "key": "licensing_barter",
+      "label": "Trade & barter, carried at nil",
+      "verdict": "the crux",
+      "comment": "Barter is content swapped for content. CuriosityStream books it as licensing revenue and capitalises the content it receives, so in FY2025 $12.6M of barter revenue met $18K of matching cost — it lands almost entirely in gross profit while producing no cash, and the capitalised content becomes an amortisation charge in later years. It was $4.5M in FY2024, $12.6M in FY2025 and $9.2M in the first half of 2026 alone, roughly a quarter of revenue. We value it at zero in the bear and base cases. If you disagree, the honest way to disagree is to give it a multiple, not to hide it inside a blended one."
+    },
+    {
+      "key": "subscription",
+      "label": "Subscription & bundled, FY2027 $35M",
+      "verdict": "reasonable",
+      "comment": "Direct-to-consumer fell from $31.3M in FY2024 to $23.8M in FY2025, offset in part by partner/bundled distribution growing from $7.3M to $9.9M. First-half 2026 subscription was $17.7M against $18.6M, a 4.8% decline that is slowing. Flat-to-slightly-down is the defensible read; management has said explicitly it is not chasing subscriber growth."
+    },
+    {
+      "key": "mult_licensing_cash",
+      "label": "Cash-licensing multiple, 1.5× / 2.5× / 5.0×",
+      "verdict": "wide, and it dominates",
+      "comment": "There is no clean peer. Content libraries change hands around 2–3× sales; listed AI-data licensors have traded anywhere from 4× to 8×. That four-fold span is the real uncertainty in this report — the peer set constrains the answer very little, and the fair value should be read as a function of the multiple you are willing to defend. At 2.5× on $27M this part is worth $1.10 a share; at 7.4× it is worth $3.25."
+    },
+    {
+      "key": "mult_subscription",
+      "label": "Subscription multiple, 0.8× / 1.0× / 1.2×",
+      "verdict": "solid",
+      "comment": "A declining niche SVOD with real gross margin is worth about one times sales, and this part is small enough that being wrong by half a turn moves the answer by about 25 cents. It is not where the argument is."
+    },
+    {
+      "key": "cash_conversion",
+      "label": "Earnings quality — the cash does not follow",
+      "verdict": "poor",
+      "comment": "Record Q2 net income of $8.9M sits against operating cash flow of negative $3.0M for the first half. Accounts receivable absorbed $3.8M, payables another $5.1M, content additions $9.5M, and a new $6.0M non-current licensing fee receivable appeared on the balance sheet — CuriosityStream is booking licensing revenue it will collect over years. Adjusted EBITDA of $18–22M for FY2026 also excludes roughly $8M of annual stock compensation. None of this makes the reported numbers wrong; it makes them a poor proxy for cash, which is why every part here is valued on revenue rather than on an earnings figure."
+    },
+    {
+      "key": "backlog",
+      "label": "Contracted backlog — $3.0M, total",
+      "verdict": "the durability test, failed so far",
+      "comment": "Remaining performance obligations at 30 June 2026 were $3.0M in total: $1.9M for the rest of 2026, $0.65M for 2027, $0.32M for 2028. Against roughly $80M of annual revenue, essentially nothing is contracted. Management's ambition is \"$100 million or more of reliable, recurring, and increasingly predictable annualized revenue\"; the backlog is where that would first become visible, and it is not there yet. This is the single strongest argument for the bear case and the reason licensing is modelled as transactional."
+    },
+    {
+      "key": "net_cash",
+      "label": "Net cash $10.9M — and a dividend larger than the cash flow",
+      "verdict": "thin",
+      "comment": "Cash, restricted cash and securities were $10.9M at 30 June with no debt, down from $27.3M at year-end. The $0.085 quarterly dividend costs about $20M a year against first-half operating cash flow of negative $3.0M, so the payout is currently funded from the balance sheet, not from earnings. We use the filed 30 June figure rather than management's $17–22M year-end guidance, because that guidance is a forecast of collections and does not belong in a bridge. A dividend cut would not change this valuation; it would change the share price."
+    },
+    {
+      "key": "shares",
+      "label": "61.5M diluted shares",
+      "verdict": "reasonable",
+      "comment": "59.1M outstanding and 60.6M weighted diluted in Q2. Stock compensation runs about $8M a year against a roughly $240M market capitalisation, so dilution of 2–3% a year is the base case, partly offset by the small buyback ($0.9M in the first half). 61.5M for FY2027 allows for one more year of that."
+    },
+    {
+      "key": "adjustments",
+      "label": "Adjustments — +$3.7M investees, −$3.7M leases",
+      "verdict": "immaterial, shown for completeness",
+      "comment": "Equity-method holdings at book value, against the present value of the office leases treated as debt. They cancel almost exactly and move the answer by nothing; they are in the build-up so the bridge is complete rather than convenient."
+    },
+    {
+      "key": "probability",
+      "label": "Scenario weights — 30 / 45 / 25",
+      "verdict": "the weakest input here",
+      "comment": "The three cases span $1.07 to $4.39, a four-fold range, so the weights matter as much as the figures and there is very little to anchor them on: two quarters of the new business model, no contracted backlog, and no analyst dispersion worth the name on a $240M company. We put 30% on the bear case because the half-year cash-licensing decline and the empty backlog are hard evidence, and 25% on the bull case because a genuinely repeatable dataset franchise is plausible and would be worth far more than we are carrying. Read the range, not the point estimate: at these weights the fair value is $2.25, but shifting 15 points from bear to bull moves it to $2.75."
+    }
+  ]
+}
