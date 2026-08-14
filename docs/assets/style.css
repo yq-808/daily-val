@@ -67,6 +67,21 @@ h2 { font-size: 18px; margin: 36px 0 12px; letter-spacing: -.01em; }
 }
 .fv-label { color: var(--muted); font-size: 14px; }
 .fv-value { font-weight: 700; font-size: 34px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+
+/* Action band: the accumulate/trim levels sit in the fair-value band, beside
+   the value they are a fraction of. Scoped with :has() so reports without a
+   band keep exactly the layout they were published with. */
+.fairvalue-band:has(.fv-levels) { align-items: flex-end; row-gap: 4px; }
+.fairvalue-band:has(.fv-levels) .fv-label { flex: 0 0 100%; }
+.fv-levels { display: flex; gap: 12px 28px; flex-wrap: wrap; margin-left: auto; }
+.fv-act { display: flex; flex-direction: column; gap: 1px; text-align: right; }
+.fv-act-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+.fv-act-value { font-weight: 700; font-size: 20px; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.fv-act-basis { color: var(--muted); font-size: 12px; }
+@media (max-width: 560px) {
+  .fv-levels { margin-left: 0; width: 100%; justify-content: space-between; }
+  .fv-act.act-buy { text-align: left; }
+}
 .meta { color: var(--muted); margin: 6px 0 0; font-size: 14px; }
 .date-badge {
   font-variant-numeric: tabular-nums; font-weight: 600; font-size: 14px;

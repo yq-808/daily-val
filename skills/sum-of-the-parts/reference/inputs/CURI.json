@@ -110,5 +110,11 @@
     "as_of": "2026-08-13",
     "solve_for": "licensing_cash",
     "commentary": "The price is not an input to anything above. Read the other way: crediting the subscription business and the cash at our own figures, the market is paying roughly 7.4× FY2027 cash licensing revenue — or, at our 2.5×, it is assuming about $80M of cash licensing revenue against our $27M. Cash licensing in the first half of 2026 was $10.9M, down from $11.3M a year earlier. Getting to $80M is not an extrapolation of that line; it is a different business."
+  },
+  "action": {
+    "confidence": "low",
+    "buy_below": "Bear",
+    "rationale": "The crux driver reads weak evidence and the cash-licensing multiple spans 1.5x to 5.0x, which alone moves the answer four-fold; the notes call the scenario weights the weakest input in the report. So the accumulate level is the bear case itself, not a discount to a weighted value those weights produced.",
+    "review": "First-half cash licensing turns up against the prior year, or barter stops growing as a share of revenue."
   }
 }

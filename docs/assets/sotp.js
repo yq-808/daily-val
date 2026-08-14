@@ -459,6 +459,16 @@
     });
   }
 
+  // The action band — a decision rule read off the per-share values above,
+  // never off the price. Delegated to action.js.
+  function renderAction(data, evald) {
+    if (!global.ACTION || !data.action) return null;
+    var cases = evald.scenarios.map(function (s) {
+      return { name: s.name, probability: s.probability, value: s.perShare };
+    });
+    return global.ACTION.mount("sotp-action", data.action, cases, evald.intrinsic, data.market, price);
+  }
+
   function renderReport(data, notes) {
     notes = notes || {};
     var evald = evaluate(data);
@@ -472,6 +482,7 @@
     renderBuildup(evald, notes);
     renderScenarios(evald);
     renderMarket(reverse(data, evald));
+    renderAction(data, evald);
     renderKeyInputs(data, evald);
     return evald;
   }

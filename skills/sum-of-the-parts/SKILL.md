@@ -142,6 +142,42 @@ forward figure, and the forward figure the price implies at your multiple. This
 is the natural reverse for a parts model — it does not ask "is the whole company
 cheap", it asks "what is the market paying for the one piece nobody can size".
 
+## Optional: the action band
+
+An `action` block turns the fair value into a decision rule — accumulate below X,
+trim above Y. The two levels render **beside the fair value at the top of the
+page**, either side of the number they are a fraction of. The reasoning behind
+them — and the only mention of the traded price — renders in a trailing section
+after the valuation.
+
+```json
+"action": {
+  "confidence": "low",
+  "buy_below": "Bear",
+  "trim_above": 1.4,
+  "rationale": "why these levels and not others",
+  "review": "what would make this band wrong"
+}
+```
+
+- `confidence` (`high` / `medium` / `low`) is the only required field. The
+  discounts it maps to — 85/125, 75/135, 60/150 percent of fair value — live in
+  `docs/assets/action.js`, not in the input. A report declares how good its
+  inputs are and takes the discount that earns; it cannot award itself a
+  narrower one.
+- `buy_below` and `trim_above` are each either a **fraction of this report's own
+  fair value** (0–3) or the **name of one of its scenarios**. An absolute share
+  price is refused with an error — that refusal is the safeguard.
+- Set the tier from the notes `drivers[]`, not from a feeling about the stock.
+  If a driver's verdict reads "weak evidence" or "the crux", the report is
+  `low` — and prefer a scenario name to a fraction there, since a fraction of a
+  probability-weighted value inherits the weakness of the weights.
+- Always write `rationale` and `review`. A band with no stated reason is a
+  number, not a rule, and `review` is what makes it falsifiable.
+
+Full spec — fallback keywords, the tier table, a worked example, and how to
+resolve a band from the command line: `skills/shared/action-band.md`.
+
 ## Key formulas
 
 | Formula | Description |

@@ -528,6 +528,30 @@
     });
   }
 
+  // The action band — a decision rule read off the values above, never off the
+  // price. Delegated to action.js.
+  //
+  // A multi-scenario comps report spreads across its scenarios like the other
+  // engines. A single-case report has no scenario spread, so the honest range
+  // is the one its own multiples already disagree over: each multiple's implied
+  // price becomes a case, and the band straddles that instead.
+  function renderAction(data, evald) {
+    if (!global.ACTION || !data.action) return null;
+    var cases;
+    if (evald.scenarios.length > 1) {
+      cases = evald.scenarios.map(function (s) {
+        return { name: s.name, probability: s.probability, value: s.average };
+      });
+    } else {
+      var only = evald.scenarios[0];
+      cases = evald.multiples.map(function (k) {
+        var m = MULTIPLES[k];
+        return { name: m ? m.label : k, probability: 0, value: only.implied[k] };
+      }).filter(function (c) { return c.value !== null && !isNaN(c.value); });
+    }
+    return global.ACTION.mount("cmp-action", data.action, cases, evald.intrinsic, data.market, price);
+  }
+
   function renderReport(data, notes) {
     notes = notes || {};
     var evald = evaluate(data);
@@ -543,6 +567,7 @@
     var rev = reverse(data, evald);
     renderMarket(rev);
     renderExpectations(expectations(data, evald, rev), rev);
+    renderAction(data, evald);
     renderKeyInputs(data, evald);
     return evald;
   }

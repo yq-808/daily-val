@@ -317,6 +317,10 @@
     }
     var weightedEl = document.getElementById("dcf-weighted");
     if (weightedEl) weightedEl.textContent = price(intrinsic);
+    // Present only on reports that carry an action band, which need the fair
+    // value standing beside the levels derived from it.
+    var fvEl = document.getElementById("dcf-fairvalue");
+    if (fvEl) fvEl.textContent = price(intrinsic);
   }
 
   function renderKeyInputs(data) {
@@ -565,6 +569,17 @@
     if (b.source) mount.appendChild(el("p", "meta", "Source: " + b.source));
   }
 
+  // The action band — a decision rule read off the values above, never off a
+  // price. Delegated to action.js, which is loaded alongside this engine on a
+  // report page and absent on the landing page.
+  function renderAction(data, evald) {
+    if (!global.ACTION || !data.action) return null;
+    var cases = evald.scenarios.map(function (s) {
+      return { name: s.name, probability: s.probability, value: s.intrinsicPrice };
+    });
+    return global.ACTION.mount("dcf-action", data.action, cases, evald.intrinsic, data.market, price);
+  }
+
   function renderReport(data, notes) {
     notes = notes || {};
     var evald = evaluate(data);
@@ -579,6 +594,7 @@
     renderWaccSensitivity(data);
     renderBuyback(data, evald.intrinsic);
     renderDrivers(notes.drivers, evald.scenarios);
+    renderAction(data, evald);
     renderKeyInputs(data);
     return evald;
   }

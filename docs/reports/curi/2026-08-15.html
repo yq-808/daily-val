@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CURI valuation — 2026-08-15 · daily-val</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<main class="wrap">
+  <p class="crumb"><a href="../../index.html">← All reports</a></p>
+
+  <header class="rpt-head">
+    <div>
+      <h1>CURI <span class="sub">valuation</span></h1>
+      <p class="meta" id="sotp-method">Sum of the parts (FY2027)</p>
+    </div>
+    <div class="date-badge">2026-08-15</div>
+  </header>
+
+  <section class="fairvalue-band">
+    <span class="fv-label">Fair value · FY2027</span>
+    <span class="fv-value" id="sotp-fairvalue">…</span>
+    <div class="fv-levels" id="sotp-action-levels"></div>
+  </section>
+  <noscript><p class="meta">This report computes its valuation in the browser;
+  enable JavaScript to see the numbers.</p></noscript>
+
+  <section>
+    <h2>1 &middot; What the parts are</h2>
+    <p class="meta">CuriosityStream reports one segment, but it runs three economically different streams, and the 10-Q discloses enough to separate them. A slowly shrinking subscription business. A licensing business that is genuinely growing. And, sitting inside that licensing line, a large and fast-growing block of trade-and-barter revenue — content swapped for content, on which no cash ever changes hands. Averaging those into one multiple would bury the only question that matters.</p>
+    <div id="sotp-parts"></div>
+  </section>
+
+  <section>
+    <h2>2 &middot; Building up the value</h2>
+    <p class="meta">Each part&#x27;s expected FY2027 figure times the multiple that stream deserves on its own merits. The barter block is carried at nil in the bear and base cases: it is real revenue under GAAP, it is not cash, and it cannot pay a dividend.</p>
+    <p class="meta" id="sotp-source"></p>
+    <div id="sotp-buildup"></div>
+  </section>
+
+  <section>
+    <h2>3 &middot; The same build-up, three ways</h2>
+    <p class="meta">The parts move together, so each case varies the figures and
+    the multiples jointly. The fair value is the probability-weighted per-share
+    value across the cases.</p>
+    <div id="sotp-scenarios"></div>
+  </section>
+
+  <section>
+    <h2>4 &middot; What the price leaves over</h2>
+    <p class="meta">Everything above was computed without looking at the market.
+    Here we do the reverse — take the traded price as given, credit every
+    other part and the cash at <em>our</em> figures, and read what is left over
+    for the one part that decides the answer.</p>
+    <div id="sotp-market"></div>
+  </section>
+
+  <section>
+    <h2>Why the band sits there</h2>
+    <p class="meta">The accumulate and trim levels at the top of this page are
+    set from the fair value and from how well this report's own inputs stand up
+    — never from the quote. Weak inputs earn a wider discount before acting, and
+    that mapping is fixed in the engine, so a report cannot award itself a level
+    that happens to clear the price. This is what the figures supported on
+    2026-08-15; a later report with different figures gets a different band.</p>
+    <div id="sotp-action"></div>
+  </section>
+
+  <section>
+    <h2>Key inputs</h2>
+    <div class="table-scroll">
+      <table class="compact">
+        <tbody id="sotp-key-inputs"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="disclaimer">
+    <p><strong>Not investment advice.</strong> A sum-of-the-parts is only as good
+    as its split and its multiples — drawing the lines differently, or paying
+    up for one stream, moves the answer a long way. The valuation is computed in
+    your browser from an embedded input snapshot using the <code>sotp</code>
+    engine; it is a personal modeling exercise, not a recommendation to buy or
+    sell any security.</p>
+    <p class="meta">Sum-of-the-parts — each stream valued on its own forward figure and its own multiple, added up and bridged to equity via net cash, computed without reference to any market price. The market price appears only in the closing section, which subtracts the other parts to read off what is left over for the one that swings; it is never an input to the valuation. The accumulate/trim levels beside the fair value are derived from that value — a discount and a premium to this report&#x27;s own figures — and never from a market price.</p>
+    <p class="snapshot">This report is a frozen daily snapshot. &rarr;
+    <a href="2026-08-15.json">Inputs &amp; evaluation behind this page</a></p>
+    <p class="gen">Generated 2026-08-15 · daily-val</p>
+  </footer>
+</main>
+<script type="application/json" id="sotp-input">{"symbol": "CURI", "method": "sotp", "anchor": "FY2027", "parts_intro": "CuriosityStream reports one segment, but it runs three economically different streams, and the 10-Q discloses enough to separate them. A slowly shrinking subscription business. A licensing business that is genuinely growing. And, sitting inside that licensing line, a large and fast-growing block of trade-and-barter revenue \u2014 content swapped for content, on which no cash ever changes hands. Averaging those into one multiple would bury the only question that matters.", "figures_intro": "Each part's expected FY2027 figure times the multiple that stream deserves on its own merits. The barter block is carried at nil in the bear and base cases: it is real revenue under GAAP, it is not cash, and it cannot pay a dividend.", "fundamentals_source": "Segment splits and the barter block are as reported in the Q2 2026 10-Q (filed 13 Aug 2026) and the FY2025 10-K; the FY2027 figures are our own estimates, extrapolated from those disclosures and management's FY2026 guidance of $77\u201382M revenue.", "balance_sheet": {"net_cash": "10.9M", "diluted_shares": "61.5M"}, "parts": [{"key": "subscription", "name": "Subscription, bundled distribution & advertising", "basis": "revenue", "comparable": "No-growth niche SVOD, ~1\u00d7 sales", "note": "Direct-to-consumer is in structural decline ($31.3M in FY2024 \u2192 $23.8M in FY2025); partner/bundled distribution is growing but not fast enough to offset it. Management says outright it is running this for durable economics rather than growth. Includes the small advertising and sponsorship line."}, {"key": "licensing_cash", "name": "Content & data licensing \u2014 cash", "basis": "revenue", "comparable": "Content libraries 2\u20133\u00d7; AI-data licensors 4\u20138\u00d7", "note": "Traditional factual-video licensing plus the AI training datasets and the 880-billion-token code corpus \u2014 the part of the licensing line that actually settles in cash. This single number decides the valuation."}, {"key": "licensing_barter", "name": "Content licensing \u2014 trade & barter (non-cash)", "basis": "revenue", "comparable": "No cash, no dividend capacity \u2014 carried at nil", "note": "Content-for-content swaps, booked as licensing revenue with the received content capitalised as an asset. FY2025 barter revenue was $12.6M against $18K of matching cost, so it lands almost entirely in gross profit while generating no cash and creating a future amortisation charge."}], "adjustments": [{"key": "equity_investees", "name": "Equity-method investees, at book", "amount": "3.7M", "comment": "Non-core holdings carried at balance-sheet value."}, {"key": "leases", "name": "Operating lease liabilities (debt-like)", "amount": "-3.7M", "comment": "Present value of the office lease commitments, treated as debt."}], "scenarios": [{"name": "Bear", "probability": 0.3, "comment": "The 2025\u201326 data-licensing burst was a one-off sale of a back catalogue, not a business. Buyers who have bought the corpus do not buy it twice; cash licensing falls back toward its pre-boom run rate and the multiple compresses to a library multiple.", "parts": {"subscription": {"amount": "33M", "multiple": 0.8}, "licensing_cash": {"amount": "19M", "multiple": 1.5}, "licensing_barter": {"amount": "14M", "multiple": 0}}}, {"name": "Base", "probability": 0.45, "comment": "Cash licensing keeps growing, but at the pace the cash line has actually shown rather than the pace the headline suggests: roughly $25M in FY2026 to $27M in FY2027. Subscription erodes a few percent. Barter keeps inflating reported revenue and is worth nothing.", "parts": {"subscription": {"amount": "35M", "multiple": 1.0}, "licensing_cash": {"amount": "27M", "multiple": 2.5}, "licensing_barter": {"amount": "18M", "multiple": 0}}}, {"name": "Bull", "probability": 0.25, "comment": "The 17 productised datasets and the code corpus turn out to be a repeatable franchise with a renewing customer base rather than a catalogue clearance \u2014 cash licensing compounds to $42M and earns a data-licensor multiple. Some of the barter is genuinely convertible into cash later.", "parts": {"subscription": {"amount": "36M", "multiple": 1.2}, "licensing_cash": {"amount": "42M", "multiple": 5.0}, "licensing_barter": {"amount": "20M", "multiple": 0.3}}}], "market": {"price": 3.99, "as_of": "2026-08-13", "solve_for": "licensing_cash", "commentary": "The price is not an input to anything above. Read the other way: crediting the subscription business and the cash at our own figures, the market is paying roughly 7.4\u00d7 FY2027 cash licensing revenue \u2014 or, at our 2.5\u00d7, it is assuming about $80M of cash licensing revenue against our $27M. Cash licensing in the first half of 2026 was $10.9M, down from $11.3M a year earlier. Getting to $80M is not an extrapolation of that line; it is a different business."}, "action": {"confidence": "low", "buy_below": "Bear", "rationale": "The crux driver reads weak evidence and the cash-licensing multiple spans 1.5x to 5.0x, which alone moves the answer four-fold; the notes call the scenario weights the weakest input in the report. So the accumulate level is the bear case itself, not a discount to a weighted value those weights produced.", "review": "First-half cash licensing turns up against the prior year, or barter stops growing as a share of revenue."}}</script>
+<script type="application/json" id="sotp-notes">{"symbol": "CURI", "as_of": "2026-08-14", "drivers": [{"key": "licensing_cash", "label": "Cash licensing, FY2027 $27M", "verdict": "weak evidence", "comment": "This is the number the valuation turns on, and it is the one the headline hides. Reported licensing rose 48% in Q2 to $14.1M \u2014 but trade and barter inside that line went from $1.9M to $5.3M, so licensing that settles in cash went from $7.6M to $8.8M, up 15%. Over the first half the cash line actually shrank: $10.9M against $11.3M a year earlier, while reported licensing rose 35%. We assume management's guided second-half ramp is real and carry $25M for FY2026 and $27M for FY2027; that is already an act of faith relative to the half-year run rate."}, {"key": "licensing_barter", "label": "Trade & barter, carried at nil", "verdict": "the crux", "comment": "Barter is content swapped for content. CuriosityStream books it as licensing revenue and capitalises the content it receives, so in FY2025 $12.6M of barter revenue met $18K of matching cost \u2014 it lands almost entirely in gross profit while producing no cash, and the capitalised content becomes an amortisation charge in later years. It was $4.5M in FY2024, $12.6M in FY2025 and $9.2M in the first half of 2026 alone, roughly a quarter of revenue. We value it at zero in the bear and base cases. If you disagree, the honest way to disagree is to give it a multiple, not to hide it inside a blended one."}, {"key": "subscription", "label": "Subscription & bundled, FY2027 $35M", "verdict": "reasonable", "comment": "Direct-to-consumer fell from $31.3M in FY2024 to $23.8M in FY2025, offset in part by partner/bundled distribution growing from $7.3M to $9.9M. First-half 2026 subscription was $17.7M against $18.6M, a 4.8% decline that is slowing. Flat-to-slightly-down is the defensible read; management has said explicitly it is not chasing subscriber growth."}, {"key": "mult_licensing_cash", "label": "Cash-licensing multiple, 1.5\u00d7 / 2.5\u00d7 / 5.0\u00d7", "verdict": "wide, and it dominates", "comment": "There is no clean peer. Content libraries change hands around 2\u20133\u00d7 sales; listed AI-data licensors have traded anywhere from 4\u00d7 to 8\u00d7. That four-fold span is the real uncertainty in this report \u2014 the peer set constrains the answer very little, and the fair value should be read as a function of the multiple you are willing to defend. At 2.5\u00d7 on $27M this part is worth $1.10 a share; at 7.4\u00d7 it is worth $3.25."}, {"key": "mult_subscription", "label": "Subscription multiple, 0.8\u00d7 / 1.0\u00d7 / 1.2\u00d7", "verdict": "solid", "comment": "A declining niche SVOD with real gross margin is worth about one times sales, and this part is small enough that being wrong by half a turn moves the answer by about 25 cents. It is not where the argument is."}, {"key": "cash_conversion", "label": "Earnings quality \u2014 the cash does not follow", "verdict": "poor", "comment": "Record Q2 net income of $8.9M sits against operating cash flow of negative $3.0M for the first half. Accounts receivable absorbed $3.8M, payables another $5.1M, content additions $9.5M, and a new $6.0M non-current licensing fee receivable appeared on the balance sheet \u2014 CuriosityStream is booking licensing revenue it will collect over years. Adjusted EBITDA of $18\u201322M for FY2026 also excludes roughly $8M of annual stock compensation. None of this makes the reported numbers wrong; it makes them a poor proxy for cash, which is why every part here is valued on revenue rather than on an earnings figure."}, {"key": "backlog", "label": "Contracted backlog \u2014 $3.0M, total", "verdict": "the durability test, failed so far", "comment": "Remaining performance obligations at 30 June 2026 were $3.0M in total: $1.9M for the rest of 2026, $0.65M for 2027, $0.32M for 2028. Against roughly $80M of annual revenue, essentially nothing is contracted. Management's ambition is \"$100 million or more of reliable, recurring, and increasingly predictable annualized revenue\"; the backlog is where that would first become visible, and it is not there yet. This is the single strongest argument for the bear case and the reason licensing is modelled as transactional."}, {"key": "net_cash", "label": "Net cash $10.9M \u2014 and a dividend larger than the cash flow", "verdict": "thin", "comment": "Cash, restricted cash and securities were $10.9M at 30 June with no debt, down from $27.3M at year-end. The $0.085 quarterly dividend costs about $20M a year against first-half operating cash flow of negative $3.0M, so the payout is currently funded from the balance sheet, not from earnings. We use the filed 30 June figure rather than management's $17\u201322M year-end guidance, because that guidance is a forecast of collections and does not belong in a bridge. A dividend cut would not change this valuation; it would change the share price."}, {"key": "shares", "label": "61.5M diluted shares", "verdict": "reasonable", "comment": "59.1M outstanding and 60.6M weighted diluted in Q2. Stock compensation runs about $8M a year against a roughly $240M market capitalisation, so dilution of 2\u20133% a year is the base case, partly offset by the small buyback ($0.9M in the first half). 61.5M for FY2027 allows for one more year of that."}, {"key": "adjustments", "label": "Adjustments \u2014 +$3.7M investees, \u2212$3.7M leases", "verdict": "immaterial, shown for completeness", "comment": "Equity-method holdings at book value, against the present value of the office leases treated as debt. They cancel almost exactly and move the answer by nothing; they are in the build-up so the bridge is complete rather than convenient."}, {"key": "probability", "label": "Scenario weights \u2014 30 / 45 / 25", "verdict": "the weakest input here", "comment": "The three cases span $1.07 to $4.39, a four-fold range, so the weights matter as much as the figures and there is very little to anchor them on: two quarters of the new business model, no contracted backlog, and no analyst dispersion worth the name on a $240M company. We put 30% on the bear case because the half-year cash-licensing decline and the empty backlog are hard evidence, and 25% on the bull case because a genuinely repeatable dataset franchise is plausible and would be worth far more than we are carrying. Read the range, not the point estimate: at these weights the fair value is $2.25, but shifting 15 points from bear to bull moves it to $2.75."}]}</script>
+<script src="../../assets/action.js"></script>
+<script src="../../assets/sotp.js"></script>
+</body>
+</html>

@@ -78,12 +78,67 @@ def is_sotp(data):
     return isinstance(data, dict) and data.get("method") == "sotp"
 
 
+ACTION_CONVENTIONS = (
+    " The accumulate/trim levels beside the fair value are derived from that "
+    "value — a discount and a premium to this report's own figures — and never "
+    "from a market price."
+)
+
+
 def conventions_for(data):
+    return _base_conventions(data) + (ACTION_CONVENTIONS if data.get("action") else "")
+
+
+def _base_conventions(data):
     if is_sotp(data):
         return SOTP_REVERSE_CONVENTIONS if data.get("market") else SOTP_CONVENTIONS
     if is_comps(data):
         return COMPS_REVERSE_CONVENTIONS if data.get("market") else COMPS_CONVENTIONS
     return DCF_CONVENTIONS
+
+
+def action_levels(data, mount_id):
+    """The two levels themselves, mounted inside the fair-value band.
+
+    They belong beside the value, not at the foot of the page: a discount and a
+    premium mean nothing without the number they are a fraction of, and a reader
+    who takes only the headline should take the whole rule with it. Only the
+    levels go here — the confidence, the reasoning and anything the traded price
+    touches stay in the trailing section, after the valuation.
+    """
+    if not data.get("action"):
+        return ""
+    return f'\n    <div class="fv-levels" id="{mount_id}-levels"></div>'
+
+
+def action_section(data, date_str, mount_id):
+    """The reasoning behind the levels — rendered only when the input carries
+    `action`.
+
+    It sits last, after the valuation and after any market/expectations section,
+    because it is the part a price may touch. The prose has to carry the dated
+    framing: a published snapshot is immutable, so a band written today would
+    otherwise still read as a live instruction a year from now.
+    """
+    if not data.get("action"):
+        return ""
+    return f"""
+  <section>
+    <h2>Why the band sits there</h2>
+    <p class="meta">The accumulate and trim levels at the top of this page are
+    set from the fair value and from how well this report's own inputs stand up
+    — never from the quote. Weak inputs earn a wider discount before acting, and
+    that mapping is fixed in the engine, so a report cannot award itself a level
+    that happens to clear the price. This is what the figures supported on
+    {date_str}; a later report with different figures gets a different band.</p>
+    <div id="{mount_id}"></div>
+  </section>
+"""
+
+
+def action_script(data):
+    """Load the shared action engine only on pages that carry a band."""
+    return '\n<script src="../../assets/action.js"></script>' if data.get("action") else ""
 
 
 def resolve_ref(kind, symbol):
@@ -171,6 +226,18 @@ def render_report(symbol, data, date_str, notes=None, snapshot_name=None):
   </section>
 """
 
+    act_levels = action_levels(data, "dcf-action")
+    act_section = action_section(data, date_str, "dcf-action")
+    # A DCF report headlines with its scenario table, so it has no fair-value
+    # band — except when it carries an action block, which needs the value the
+    # levels are a fraction of standing right next to them.
+    fv_band = f"""
+  <section class="fairvalue-band">
+    <span class="fv-label">Fair value \u00b7 probability-weighted</span>
+    <span class="fv-value" id="dcf-fairvalue">\u2026</span>{act_levels}
+  </section>
+""" if data.get("action") else ""
+    act_script = action_script(data)
     notes_script = ""
     if notes:
         notes_script = f'\n<script type="application/json" id="dcf-notes">{embed_json(notes)}</script>'
@@ -194,7 +261,7 @@ def render_report(symbol, data, date_str, notes=None, snapshot_name=None):
     </div>
     <div class="date-badge">{date_str}</div>
   </header>
-
+{fv_band}
   <section>
     <h2>Scenario breakdown</h2>
     <div class="table-scroll">
@@ -213,7 +280,7 @@ def render_report(symbol, data, date_str, notes=None, snapshot_name=None):
     <noscript><p class="meta">This report computes its valuation in the browser;
     enable JavaScript to see the numbers.</p></noscript>
   </section>
-{consensus_section}{wacc_section}{buyback_section}{drivers_section}
+{consensus_section}{wacc_section}{buyback_section}{drivers_section}{act_section}
   <section>
     <h2>Key inputs</h2>
     <div class="table-scroll">
@@ -234,7 +301,7 @@ def render_report(symbol, data, date_str, notes=None, snapshot_name=None):
     <p class="gen">Generated {date_str} · daily-val</p>
   </footer>
 </main>
-<script type="application/json" id="dcf-input">{embed_json(data)}</script>{notes_script}
+<script type="application/json" id="dcf-input">{embed_json(data)}</script>{notes_script}{act_script}
 <script src="../../assets/dcf.js"></script>
 </body>
 </html>
@@ -297,6 +364,9 @@ def render_comps_report(symbol, data, date_str, notes=None, snapshot_name=None):
   </section>
 """
 
+    act_levels = action_levels(data, "cmp-action")
+    act_section = action_section(data, date_str, "cmp-action")
+    act_script = action_script(data)
     notes_script = ""
     if notes:
         notes_script = f'\n<script type="application/json" id="cmp-notes">{embed_json(notes)}</script>'
@@ -323,7 +393,7 @@ def render_comps_report(symbol, data, date_str, notes=None, snapshot_name=None):
 
   <section class="fairvalue-band">
     <span class="fv-label">{fv_label}</span>
-    <span class="fv-value" id="cmp-fairvalue">…</span>
+    <span class="fv-value" id="cmp-fairvalue">…</span>{act_levels}
   </section>
   <noscript><p class="meta">This report computes its valuation in the browser;
   enable JavaScript to see the numbers.</p></noscript>
@@ -348,7 +418,7 @@ def render_comps_report(symbol, data, date_str, notes=None, snapshot_name=None):
     shares. The fair value is the average of those prices.</p>
     <div id="cmp-calc"></div>
   </section>
-{market_section}{expect_section}
+{market_section}{expect_section}{act_section}
   <section>
     <h2>Key inputs</h2>
     <div class="table-scroll">
@@ -372,7 +442,7 @@ def render_comps_report(symbol, data, date_str, notes=None, snapshot_name=None):
     <p class="gen">Generated {date_str} · daily-val</p>
   </footer>
 </main>
-<script type="application/json" id="cmp-input">{embed_json(data)}</script>{notes_script}
+<script type="application/json" id="cmp-input">{embed_json(data)}</script>{notes_script}{act_script}
 <script src="../../assets/comps.js"></script>
 </body>
 </html>
@@ -420,6 +490,9 @@ def render_sotp_report(symbol, data, date_str, notes=None, snapshot_name=None):
   </section>
 """
 
+    act_levels = action_levels(data, "sotp-action")
+    act_section = action_section(data, date_str, "sotp-action")
+    act_script = action_script(data)
     notes_script = ""
     if notes:
         notes_script = f'\n<script type="application/json" id="sotp-notes">{embed_json(notes)}</script>'
@@ -446,7 +519,7 @@ def render_sotp_report(symbol, data, date_str, notes=None, snapshot_name=None):
 
   <section class="fairvalue-band">
     <span class="fv-label">{fv_label}</span>
-    <span class="fv-value" id="sotp-fairvalue">\u2026</span>
+    <span class="fv-value" id="sotp-fairvalue">\u2026</span>{act_levels}
   </section>
   <noscript><p class="meta">This report computes its valuation in the browser;
   enable JavaScript to see the numbers.</p></noscript>
@@ -471,7 +544,7 @@ def render_sotp_report(symbol, data, date_str, notes=None, snapshot_name=None):
     value across the cases.</p>
     <div id="sotp-scenarios"></div>
   </section>
-{market_section}
+{market_section}{act_section}
   <section>
     <h2>Key inputs</h2>
     <div class="table-scroll">
@@ -494,7 +567,7 @@ def render_sotp_report(symbol, data, date_str, notes=None, snapshot_name=None):
     <p class="gen">Generated {date_str} \u00b7 daily-val</p>
   </footer>
 </main>
-<script type="application/json" id="sotp-input">{embed_json(data)}</script>{notes_script}
+<script type="application/json" id="sotp-input">{embed_json(data)}</script>{notes_script}{act_script}
 <script src="../../assets/sotp.js"></script>
 </body>
 </html>
@@ -609,6 +682,21 @@ h2 { font-size: 18px; margin: 36px 0 12px; letter-spacing: -.01em; }
 }
 .fv-label { color: var(--muted); font-size: 14px; }
 .fv-value { font-weight: 700; font-size: 34px; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+
+/* Action band: the accumulate/trim levels sit in the fair-value band, beside
+   the value they are a fraction of. Scoped with :has() so reports without a
+   band keep exactly the layout they were published with. */
+.fairvalue-band:has(.fv-levels) { align-items: flex-end; row-gap: 4px; }
+.fairvalue-band:has(.fv-levels) .fv-label { flex: 0 0 100%; }
+.fv-levels { display: flex; gap: 12px 28px; flex-wrap: wrap; margin-left: auto; }
+.fv-act { display: flex; flex-direction: column; gap: 1px; text-align: right; }
+.fv-act-label { color: var(--muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+.fv-act-value { font-weight: 700; font-size: 20px; font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+.fv-act-basis { color: var(--muted); font-size: 12px; }
+@media (max-width: 560px) {
+  .fv-levels { margin-left: 0; width: 100%; justify-content: space-between; }
+  .fv-act.act-buy { text-align: left; }
+}
 .meta { color: var(--muted); margin: 6px 0 0; font-size: 14px; }
 .date-badge {
   font-variant-numeric: tabular-nums; font-weight: 600; font-size: 14px;

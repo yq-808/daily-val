@@ -12,6 +12,16 @@ the model backwards — taking the traded price as given and solving for the
 multiple or growth path you would have to believe to justify it. It sits after
 the valuation and never feeds into it.
 
+It may also carry an **action band**: accumulate below X, trim above Y. Those two
+levels sit beside the fair value at the top of the page, either side of the number
+they are a fraction of — never an absolute price, and never derived from the
+quote. How wide the discount is follows from a declared `confidence` in the
+report's inputs, with the discounts fixed in the engine rather than the input, so
+a report cannot award itself a level that happens to clear the market. The
+reasoning behind the levels — and the only mention of where the price sits —
+renders below, after the valuation. A band is a dated note about that day's
+model, never a standing instruction.
+
 Three methods share one pipeline, selected by the input's `method` field:
 
 - **DCF** (FCFF) — for durable compounders.
@@ -55,7 +65,8 @@ daily-val/
 │   │   └── reference/{inputs,notes}/<SYM>.json  # comps working drafts (mutable)
 │   ├── sum-of-the-parts/        # Per-stream (sotp) valuation skill + engine
 │   │   └── reference/{inputs,notes}/<SYM>.json  # sotp working drafts (mutable)
-│   └── megawatt-pe-valuation/   # Earnings × P/E model for power / AI-infra
+│   ├── megawatt-pe-valuation/   # Earnings × P/E model for power / AI-infra
+│   └── shared/action-band.md    # the action band, shared by all three methods
 ├── scripts/
 │   └── generate_report.py       # freezes a dated snapshot + page, rebuilds the index
 └── docs/                        # ← GitHub Pages site root (serve from main /docs)
@@ -64,7 +75,8 @@ daily-val/
     │   ├── style.css
     │   ├── dcf.js               # client-side DCF engine (port of the dcf skill)
     │   ├── comps.js             # client-side comps engine (port of relative-comps)
-    │   └── sotp.js              # client-side sum-of-the-parts engine
+    │   ├── sotp.js              # client-side sum-of-the-parts engine
+    │   └── action.js            # shared action band (reads a fair value, feeds none)
     └── reports/
         ├── manifest.json        # reports + their embedded inputs + snapshot paths
         └── <symbol>/
