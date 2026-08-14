@@ -35,10 +35,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 DCF_REF = ROOT / "skills" / "dcf" / "reference"
 COMPS_REF = ROOT / "skills" / "relative-comps" / "reference"
+SOTP_REF = ROOT / "skills" / "sum-of-the-parts" / "reference"
 # Where the generator looks up a symbol's working-draft inputs + notes. The
 # input's own "method" field selects the client-side engine; the reference file
 # can live under either skill's reference tree.
-REF_ROOTS = [DCF_REF, COMPS_REF]
+REF_ROOTS = [DCF_REF, COMPS_REF, SOTP_REF]
 DOCS = ROOT / "docs"
 REPORTS_DIR = DOCS / "reports"
 MANIFEST = REPORTS_DIR / "manifest.json"
@@ -55,13 +56,31 @@ COMPS_REVERSE_CONVENTIONS = (
     "appears only in the implied-expectations sections, which run the model backwards "
     "to explain it; it is never an input to the valuation."
 )
+SOTP_CONVENTIONS = (
+    "Sum-of-the-parts — each stream valued on its own forward figure and its own "
+    "multiple, added up, then bridged to equity via net cash. Valuation only — no "
+    "live market price is used."
+)
+SOTP_REVERSE_CONVENTIONS = (
+    "Sum-of-the-parts — each stream valued on its own forward figure and its own "
+    "multiple, added up and bridged to equity via net cash, computed without "
+    "reference to any market price. The market price appears only in the closing "
+    "section, which subtracts the other parts to read off what is left over for "
+    "the one that swings; it is never an input to the valuation."
+)
 
 
 def is_comps(data):
     return isinstance(data, dict) and data.get("method") == "comps"
 
 
+def is_sotp(data):
+    return isinstance(data, dict) and data.get("method") == "sotp"
+
+
 def conventions_for(data):
+    if is_sotp(data):
+        return SOTP_REVERSE_CONVENTIONS if data.get("market") else SOTP_CONVENTIONS
     if is_comps(data):
         return COMPS_REVERSE_CONVENTIONS if data.get("market") else COMPS_CONVENTIONS
     return DCF_CONVENTIONS
@@ -88,6 +107,9 @@ def load_json(path):
 
 def method_for(data):
     """Human label for the model type — derivable without running the engine."""
+    if is_sotp(data):
+        anchor = data.get("anchor")
+        return "Sum of the parts" + (f" ({anchor})" if anchor else "")
     if is_comps(data):
         anchor = data.get("anchor")
         return "Relative valuation — peer multiples" + (f" ({anchor})" if anchor else "")
@@ -357,6 +379,128 @@ def render_comps_report(symbol, data, date_str, notes=None, snapshot_name=None):
 """
 
 
+# --------------------------------------------------------------------------- #
+# HTML rendering — sum-of-the-parts page. Same contract as the other two:
+# inputs (+ notes) are embedded; docs/assets/sotp.js fills the numbers
+# client-side. The fair value is derived without any market price.
+# --------------------------------------------------------------------------- #
+def render_sotp_report(symbol, data, date_str, notes=None, snapshot_name=None):
+    sym = escape(symbol)
+    method = escape(method_for(data))
+    anchor = escape(str(data.get("anchor", "")))
+    notes = notes or {}
+    snapshot_name = snapshot_name or f"{date_str}.json"
+
+    fv_label = f"Fair value{f' \u00b7 {anchor}' if anchor else ''}"
+
+    parts_intro = data.get("parts_intro") or (
+        "The company is not one business, so it is not valued as one. Each "
+        "stream below is carried on its own forward figure and its own multiple."
+    )
+    figures_intro = data.get("figures_intro") or (
+        f"Each part's expected {anchor} figure, times the multiple we think that "
+        "particular stream deserves. The pieces add to an enterprise value, which "
+        "nets cash and divides by shares."
+    )
+
+    # The closing section is the one place a price may appear, and it runs
+    # *backwards*: hold every other part at our own figures and read off what
+    # the price leaves over for the part that actually swings the answer. The
+    # fair value above is already fixed before the price is read.
+    market_section = ""
+    if data.get("market"):
+        market_section = """
+  <section>
+    <h2>4 &middot; What the price leaves over</h2>
+    <p class="meta">Everything above was computed without looking at the market.
+    Here we do the reverse \u2014 take the traded price as given, credit every
+    other part and the cash at <em>our</em> figures, and read what is left over
+    for the one part that decides the answer.</p>
+    <div id="sotp-market"></div>
+  </section>
+"""
+
+    notes_script = ""
+    if notes:
+        notes_script = f'\n<script type="application/json" id="sotp-notes">{embed_json(notes)}</script>'
+
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{sym} valuation \u2014 {date_str} \u00b7 daily-val</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<main class="wrap">
+  <p class="crumb"><a href="../../index.html">\u2190 All reports</a></p>
+
+  <header class="rpt-head">
+    <div>
+      <h1>{sym} <span class="sub">valuation</span></h1>
+      <p class="meta" id="sotp-method">{method}</p>
+    </div>
+    <div class="date-badge">{date_str}</div>
+  </header>
+
+  <section class="fairvalue-band">
+    <span class="fv-label">{fv_label}</span>
+    <span class="fv-value" id="sotp-fairvalue">\u2026</span>
+  </section>
+  <noscript><p class="meta">This report computes its valuation in the browser;
+  enable JavaScript to see the numbers.</p></noscript>
+
+  <section>
+    <h2>1 &middot; What the parts are</h2>
+    <p class="meta">{escape(parts_intro)}</p>
+    <div id="sotp-parts"></div>
+  </section>
+
+  <section>
+    <h2>2 &middot; Building up the value</h2>
+    <p class="meta">{escape(figures_intro)}</p>
+    <p class="meta" id="sotp-source"></p>
+    <div id="sotp-buildup"></div>
+  </section>
+
+  <section>
+    <h2>3 &middot; The same build-up, three ways</h2>
+    <p class="meta">The parts move together, so each case varies the figures and
+    the multiples jointly. The fair value is the probability-weighted per-share
+    value across the cases.</p>
+    <div id="sotp-scenarios"></div>
+  </section>
+{market_section}
+  <section>
+    <h2>Key inputs</h2>
+    <div class="table-scroll">
+      <table class="compact">
+        <tbody id="sotp-key-inputs"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="disclaimer">
+    <p><strong>Not investment advice.</strong> A sum-of-the-parts is only as good
+    as its split and its multiples \u2014 drawing the lines differently, or paying
+    up for one stream, moves the answer a long way. The valuation is computed in
+    your browser from an embedded input snapshot using the <code>sotp</code>
+    engine; it is a personal modeling exercise, not a recommendation to buy or
+    sell any security.</p>
+    <p class="meta">{escape(conventions_for(data))}</p>
+    <p class="snapshot">This report is a frozen daily snapshot. &rarr;
+    <a href="{escape(snapshot_name)}">Inputs &amp; evaluation behind this page</a></p>
+    <p class="gen">Generated {date_str} \u00b7 daily-val</p>
+  </footer>
+</main>
+<script type="application/json" id="sotp-input">{embed_json(data)}</script>{notes_script}
+<script src="../../assets/sotp.js"></script>
+</body>
+</html>
+"""
+
+
 def render_index(entries):
     # The report list is NOT embedded here. The page reads it at runtime from
     # the reports/manifest.json data file and sorts it (date desc) client-side,
@@ -389,6 +533,7 @@ def render_index(entries):
   </footer>
 </main>
 <script src="assets/comps.js"></script>
+<script src="assets/sotp.js"></script>
 <script src="assets/dcf.js"></script>
 </body>
 </html>
@@ -574,7 +719,12 @@ def main():
 
     # 2. Write report page (inputs+notes embedded; math runs in the browser).
     #    The input's method selects the engine + template.
-    render = render_comps_report if is_comps(data) else render_report
+    if is_sotp(data):
+        render = render_sotp_report
+    elif is_comps(data):
+        render = render_comps_report
+    else:
+        render = render_report
     out_file = out_dir / f"{date_str}.html"
     out_file.write_text(render(symbol, data, date_str, notes, snapshot_name))
 

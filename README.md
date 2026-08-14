@@ -12,12 +12,18 @@ the model backwards — taking the traded price as given and solving for the
 multiple or growth path you would have to believe to justify it. It sits after
 the valuation and never feeds into it.
 
-Two methods share one pipeline, selected by the input's `method` field: a
-**DCF** (FCFF) for durable compounders, and a **relative comps** model
-(peer/re-rating multiples — P/E, EV/EBITDA, P/B, EV/Sales, EV/FCF on a
-forward metric)
-for cyclicals and "new-paradigm" re-ratings where a smooth cash-flow stream is a
-poor fit (e.g. MU). Both obey the same rules below.
+Three methods share one pipeline, selected by the input's `method` field:
+
+- **DCF** (FCFF) — for durable compounders.
+- **Relative comps** — peer/re-rating multiples (P/E, EV/EBITDA, P/B, EV/Sales,
+  EV/FCF on a forward metric) for cyclicals and "new-paradigm" re-ratings where a
+  smooth cash-flow stream is a poor fit (e.g. MU), and for names whose GAAP
+  earnings are too distorted to discount (e.g. PANW).
+- **Sum of the parts** — each stream on its own forward figure and its own
+  multiple, for companies that are not one business and where a blended multiple
+  would average away the question (e.g. CURI).
+
+All three obey the same rules below.
 
 ## Every report is a frozen daily snapshot
 
@@ -47,6 +53,8 @@ daily-val/
 │   │       └── notes/<SYM>.json    # working-draft evaluation notes (mutable)
 │   ├── relative-comps/          # Peer-multiple (comps) valuation skill + engine
 │   │   └── reference/{inputs,notes}/<SYM>.json  # comps working drafts (mutable)
+│   ├── sum-of-the-parts/        # Per-stream (sotp) valuation skill + engine
+│   │   └── reference/{inputs,notes}/<SYM>.json  # sotp working drafts (mutable)
 │   └── megawatt-pe-valuation/   # Earnings × P/E model for power / AI-infra
 ├── scripts/
 │   └── generate_report.py       # freezes a dated snapshot + page, rebuilds the index
@@ -55,7 +63,8 @@ daily-val/
     ├── assets/
     │   ├── style.css
     │   ├── dcf.js               # client-side DCF engine (port of the dcf skill)
-    │   └── comps.js             # client-side comps engine (port of relative-comps)
+    │   ├── comps.js             # client-side comps engine (port of relative-comps)
+    │   └── sotp.js              # client-side sum-of-the-parts engine
     └── reports/
         ├── manifest.json        # reports + their embedded inputs + snapshot paths
         └── <symbol>/
@@ -78,17 +87,20 @@ JSON *and* its evaluation notes into `docs/reports/<symbol>/<date>.json`, embeds
 the same data into `docs/reports/<symbol>/<date>.html`, records the run in
 `docs/reports/manifest.json`, and rebuilds `docs/index.html`. The valuation
 tables and the probability-weighted value are computed in the browser by the
-method's engine — [`docs/assets/dcf.js`](docs/assets/dcf.js) or
-[`docs/assets/comps.js`](docs/assets/comps.js), faithful ports of the matching
+method's engine — [`docs/assets/dcf.js`](docs/assets/dcf.js),
+[`docs/assets/comps.js`](docs/assets/comps.js) or
+[`docs/assets/sotp.js`](docs/assets/sotp.js), faithful ports of the matching
 skill's Python engine. To post a report for a new date, run the command again
 with a new `--date` and commit.
 
 The symbol must have an input file under a reference root the generator knows:
-`skills/dcf/reference/inputs/<SYMBOL>.json` (GOOGL, MSFT, AAPL) or
-`skills/relative-comps/reference/inputs/<SYMBOL>.json` (MU), each with an optional
-`notes/<SYMBOL>.json` evaluation sidecar. The input's `method` field (`"comps"`,
-or absent for DCF) selects the engine. Refreshing the underlying financials for
-the DCF skill uses its own `fetch_*.py` scripts and requires an API key
+`skills/dcf/reference/inputs/<SYMBOL>.json` (GOOGL, MSFT, AAPL),
+`skills/relative-comps/reference/inputs/<SYMBOL>.json` (MU, PANW), or
+`skills/sum-of-the-parts/reference/inputs/<SYMBOL>.json` (CURI), each with an
+optional `notes/<SYMBOL>.json` evaluation sidecar. The input's `method` field
+(`"comps"`, `"sotp"`, or absent for DCF) selects the engine. Refreshing the
+underlying financials for the DCF skill uses its own `fetch_*.py` scripts and
+requires an API key
 (`FINNHUB_API_KEY` in a gitignored `.env`).
 
 ## Publishing with GitHub Pages

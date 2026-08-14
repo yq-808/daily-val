@@ -583,14 +583,26 @@
     return evald;
   }
 
-  // Headline number for a manifest entry, dispatched by method. Comps reports
-  // (input.method === "comps") are valued by the sibling COMPS engine, loaded
-  // alongside this script on the landing page; everything else is a DCF.
+  // Headline number for a manifest entry, dispatched by method. Reports carrying
+  // an input.method are valued by the sibling engine of that name — COMPS or
+  // SOTP, both loaded alongside this script on the landing page; everything else
+  // is a DCF.
   function intrinsicOf(input) {
-    if (input && input.method === "comps" && global.COMPS) {
-      return global.COMPS.evaluate(input).intrinsic;
-    }
+    var m = input && input.method;
+    if (m === "comps" && global.COMPS) return global.COMPS.evaluate(input).intrinsic;
+    if (m === "sotp" && global.SOTP) return global.SOTP.evaluate(input).intrinsic;
     return evaluate(input).intrinsic;
+  }
+
+  // Each engine headlines its value the way its own report page does. Comps
+  // values run four digits, so they print whole dollars; a sum-of-the-parts can
+  // come out at a few dollars a share, where the cents carry real information;
+  // DCF per-share values keep cents.
+  function formatIntrinsic(input, v) {
+    var m = input && input.method;
+    if (m === "comps") return "$" + Math.round(v);
+    if (m === "sotp" && global.SOTP) return global.SOTP.price(v);
+    return price(v);
   }
 
   // Flat list of every report, newest first (date desc; symbol asc for ties).
@@ -621,11 +633,8 @@
       a.appendChild(el("span", "rr-method", e.method || ""));
       var metric = el("span", "rr-metric", "fair value ");
       var b = el("b");
-      // Comps values run four digits — show whole dollars, matching the comps
-      // page; DCF per-share values keep cents.
       try {
-        var v = intrinsicOf(e.input);
-        b.textContent = (e.input && e.input.method === "comps") ? "$" + Math.round(v) : price(v);
+        b.textContent = formatIntrinsic(e.input, intrinsicOf(e.input));
       } catch (err) { b.textContent = "—"; }
       metric.appendChild(b);
       a.appendChild(metric);
