@@ -1,72 +1,78 @@
 {
   "symbol": "CURI",
-  "as_of": "2026-08-14",
+  "as_of": "2026-08-15",
   "drivers": [
     {
       "key": "licensing_cash",
-      "label": "Cash licensing, FY2027 $27M",
-      "verdict": "weak evidence",
-      "comment": "This is the number the valuation turns on, and it is the one the headline hides. Reported licensing rose 48% in Q2 to $14.1M — but trade and barter inside that line went from $1.9M to $5.3M, so licensing that settles in cash went from $7.6M to $8.8M, up 15%. Over the first half the cash line actually shrank: $10.9M against $11.3M a year earlier, while reported licensing rose 35%. We assume management's guided second-half ramp is real and carry $25M for FY2026 and $27M for FY2027; that is already an act of faith relative to the half-year run rate."
+      "label": "Recurring cash licensing, FY2027 $12M",
+      "verdict": "very weak evidence",
+      "comment": "This is the number the valuation turns on, and the headline hides it twice over. Reported licensing rose 48% in Q2 to $14.1M. Trade and barter inside that line went from $1.9M to $5.3M. And $8.5M of it is a single content licence sold on 30 June to the buyer of three divested brands, recognised in full on signature and collected as four annual instalments from June 2027. Strip both out and licensing that is both cash and capable of recurring was $0.25M in the quarter, against $7.6M a year earlier; over the first half, $2.4M against $11.3M, down 79%, while reported licensing rose 35%. The cost side agrees: distribution costs, which include the fixed percentage paid to AI training content partners, fell 69% to $2.2M. We carry $12M for FY2027 on the assumption that management delivers part of the second-half ramp its own guidance requires — to reach $38–41M of second-half revenue it needs roughly $11–14M of cash licensing against $2.4M in the first half, unless it fills the gap with more barter. Our figure is already several times the current run rate."
+    },
+    {
+      "key": "licensing_receivable",
+      "label": "Curiosity Brands licence — $8.5M, moved to the bridge",
+      "verdict": "real money, not a multiple",
+      "comment": "On 30 June CuriosityStream sold the Curiosity University, Curiosity Audio and Catholic Stream brands for $0.3M and, the same day, licensed content back to the buyer for $10M payable in four annual instalments from June 2027. Discounted at 7%, that booked $8.5M of licensing revenue in a single quarter and put a receivable on the balance sheet — $5.97M non-current plus roughly $2.5M current. It is contracted cash, so it belongs in the valuation, but as the fixed asset it is: capitalising it at 2.5× sales as well would value the same $10M twice. Two things about it are worth stating plainly. It is not repeatable — there are only so many brands to divest. And a counterparty that paid $0.3M for the businesses now owes $10M for the licence, which is why the bear case carries the receivable at half. Management's 12 August release described the quarter's licensing as 'driven by new partnerships' and did not mention it; the 10-Q, a day later, did."
     },
     {
       "key": "licensing_barter",
       "label": "Trade & barter, carried at nil",
-      "verdict": "the crux",
-      "comment": "Barter is content swapped for content. CuriosityStream books it as licensing revenue and capitalises the content it receives, so in FY2025 $12.6M of barter revenue met $18K of matching cost — it lands almost entirely in gross profit while producing no cash, and the capitalised content becomes an amortisation charge in later years. It was $4.5M in FY2024, $12.6M in FY2025 and $9.2M in the first half of 2026 alone, roughly a quarter of revenue. We value it at zero in the bear and base cases. If you disagree, the honest way to disagree is to give it a multiple, not to hide it inside a blended one."
+      "verdict": "unchanged, and still growing",
+      "comment": "Barter is content swapped for content. CuriosityStream books it as licensing revenue and capitalises the content it receives, so in the first half of 2026 $9.2M of barter revenue met exactly $0 of matching cost — it lands entirely in gross profit while producing no cash, and the capitalised content becomes an amortisation charge in later years. It was $4.5M in FY2024, $12.6M in FY2025 and $9.2M in the first half of 2026 alone, roughly a quarter of revenue. Note what this does to the reported margin: the 73% gross margin management highlighted is largely the arithmetic of barter and the disposal licence, both of which carry almost no cost. We value barter at zero in the bear and base cases. If you disagree, the honest way to disagree is to give it a multiple, not to hide it inside a blended one."
     },
     {
       "key": "subscription",
       "label": "Subscription & bundled, FY2027 $35M",
       "verdict": "reasonable",
-      "comment": "Direct-to-consumer fell from $31.3M in FY2024 to $23.8M in FY2025, offset in part by partner/bundled distribution growing from $7.3M to $9.9M. First-half 2026 subscription was $17.7M against $18.6M, a 4.8% decline that is slowing. Flat-to-slightly-down is the defensible read; management has said explicitly it is not chasing subscriber growth."
+      "comment": "Direct-to-consumer fell from $31.3M in FY2024 → $23.8M in FY2025, offset in part by partner/bundled distribution growing from $7.3M to $9.9M. First-half 2026 subscription was $17.7M against $18.6M, a 5% decline held back by the March price increase rather than by subscriber growth — management attributes the fall to a lower subscriber count. Flat-to-slightly-down is the defensible read. Consolidating Spiegel Venture from 1 July adds roughly $1.4M a year on the pro forma disclosure, which is inside the rounding on this part."
     },
     {
       "key": "mult_licensing_cash",
       "label": "Cash-licensing multiple, 1.5× / 2.5× / 5.0×",
       "verdict": "wide, and it dominates",
-      "comment": "There is no clean peer. Content libraries change hands around 2–3× sales; listed AI-data licensors have traded anywhere from 4× to 8×. That four-fold span is the real uncertainty in this report — the peer set constrains the answer very little, and the fair value should be read as a function of the multiple you are willing to defend. At 2.5× on $27M this part is worth $1.10 a share; at 7.4× it is worth $3.25."
+      "comment": "There is no clean peer. Content libraries change hands around 2–3× sales; listed AI-data licensors have traded anywhere from 4× to 8×. That four-fold span is the second-largest uncertainty in this report, behind the figure it multiplies — the peer set constrains the answer very little, and the fair value should be read as a function of the multiple you are willing to defend. At 2.5× on $12M this part is worth $0.49 a share; at 13.8×, which is what the traded price implies, it is worth $2.69."
     },
     {
       "key": "mult_subscription",
       "label": "Subscription multiple, 0.8× / 1.0× / 1.2×",
       "verdict": "solid",
-      "comment": "A declining niche SVOD with real gross margin is worth about one times sales, and this part is small enough that being wrong by half a turn moves the answer by about 25 cents. It is not where the argument is."
+      "comment": "A declining niche SVOD with real gross margin is worth about one times sales, and this part is small enough that being wrong by half a turn moves the answer by about 25 cents. It is not where the argument is — though it is now, at $35M of the $65M base-case parts total, the larger half of the business by value."
     },
     {
       "key": "cash_conversion",
       "label": "Earnings quality — the cash does not follow",
       "verdict": "poor",
-      "comment": "Record Q2 net income of $8.9M sits against operating cash flow of negative $3.0M for the first half. Accounts receivable absorbed $3.8M, payables another $5.1M, content additions $9.5M, and a new $6.0M non-current licensing fee receivable appeared on the balance sheet — CuriosityStream is booking licensing revenue it will collect over years. Adjusted EBITDA of $18–22M for FY2026 also excludes roughly $8M of annual stock compensation. None of this makes the reported numbers wrong; it makes them a poor proxy for cash, which is why every part here is valued on revenue rather than on an earnings figure."
+      "comment": "Record Q2 net income of $8.9M sits against operating cash flow of negative $3.0M for the first half. The reconciliation is not subtle: $8.5M of that income is a receivable collectable from 2027, and $5.3M of the quarter's revenue was content rather than money. Accounts receivable absorbed $3.8M, payables another $5.1M, content additions $9.5M. Adjusted EBITDA of $18–22M guided for FY2026 also excludes roughly $8M of annual stock compensation. None of this makes the reported numbers wrong; it makes them a poor proxy for cash, which is why every part here is valued on revenue rather than on an earnings figure, and why the two revenue blocks that are not cash are separated out before the multiple is applied."
     },
     {
       "key": "backlog",
       "label": "Contracted backlog — $3.0M, total",
       "verdict": "the durability test, failed so far",
-      "comment": "Remaining performance obligations at 30 June 2026 were $3.0M in total: $1.9M for the rest of 2026, $0.65M for 2027, $0.32M for 2028. Against roughly $80M of annual revenue, essentially nothing is contracted. Management's ambition is \"$100 million or more of reliable, recurring, and increasingly predictable annualized revenue\"; the backlog is where that would first become visible, and it is not there yet. This is the single strongest argument for the bear case and the reason licensing is modelled as transactional."
+      "comment": "Remaining performance obligations at 30 June 2026 were $3.0M in total: $1.9M for the rest of 2026, $0.65M for 2027, $0.32M for 2028. Against roughly $80M of guided annual revenue, essentially nothing is contracted, and the $10M Curiosity Brands licence is excluded because it is already earned. Management's ambition is '$100 million or more of reliable, recurring, and increasingly predictable annualized revenue'; the backlog is where that would first become visible, and it is not there yet. This is the single strongest argument for the bear case and the reason licensing is modelled as transactional."
     },
     {
       "key": "net_cash",
-      "label": "Net cash $10.9M — and a dividend larger than the cash flow",
-      "verdict": "thin",
-      "comment": "Cash, restricted cash and securities were $10.9M at 30 June with no debt, down from $27.3M at year-end. The $0.085 quarterly dividend costs about $20M a year against first-half operating cash flow of negative $3.0M, so the payout is currently funded from the balance sheet, not from earnings. We use the filed 30 June figure rather than management's $17–22M year-end guidance, because that guidance is a forecast of collections and does not belong in a bridge. A dividend cut would not change this valuation; it would change the share price."
+      "label": "Net cash $8.9M — and a covenant the dividend is about to meet",
+      "verdict": "thin, and now constrained",
+      "comment": "Cash, restricted cash and securities were $10.9M at 30 June with no borrowings, down from $27.3M at year-end; we deduct the $2.0M paid on 1 July for the remaining 68% of Spiegel Venture, a completed and disclosed subsequent event, to get $8.9M. We do not use management's $17–22M year-end guidance, because that is a forecast of collections and does not belong in a bridge. The new fact this quarter is the Citibank revolver signed in March: $10.0M, secured on substantially all assets, and it forbids dividends or buybacks unless liquidity — defined as unrestricted cash plus facility availability — stays at $10.0M after the payment. Unrestricted cash was $5.4M at 30 June, so liquidity is about $15.4M, and the $5.0M dividend declared on 12 August and payable 18 September leaves roughly $0.4M of headroom. The $0.085 quarterly dividend costs about $20M a year against first-half operating cash flow of negative $3.0M. It is being funded from the balance sheet, and the balance sheet is now within one quarter of a contractual floor. A dividend cut would not change this valuation; it would change the share price."
     },
     {
       "key": "shares",
       "label": "61.5M diluted shares",
       "verdict": "reasonable",
-      "comment": "59.1M outstanding and 60.6M weighted diluted in Q2. Stock compensation runs about $8M a year against a roughly $240M market capitalisation, so dilution of 2–3% a year is the base case, partly offset by the small buyback ($0.9M in the first half). 61.5M for FY2027 allows for one more year of that."
+      "comment": "59.1M outstanding and 60.6M weighted diluted in Q2. Stock compensation runs about $8M a year, so dilution of 2–3% a year is the base case, partly offset by the small buyback ($0.9M in the first half — which the revolver covenant now also restricts). 61.5M for FY2027 allows for one more year of that."
     },
     {
       "key": "adjustments",
-      "label": "Adjustments — +$3.7M investees, −$3.7M leases",
-      "verdict": "immaterial, shown for completeness",
-      "comment": "Equity-method holdings at book value, against the present value of the office leases treated as debt. They cancel almost exactly and move the answer by nothing; they are in the build-up so the bridge is complete rather than convenient."
+      "label": "Adjustments — +$8.5M receivable, +$3.7M investees, −$3.7M leases",
+      "verdict": "one of them matters now",
+      "comment": "The investees, at book value, and the office leases treated as debt cancel almost exactly and move the answer by nothing; they are in the build-up so the bridge is complete rather than convenient. The Curiosity Brands receivable is different — at $8.5M it is 14 cents a share, and where it sits is a judgment rather than a rounding. Putting it here rather than in the licensing part is the single change that separates this report from the last one."
     },
     {
       "key": "probability",
-      "label": "Scenario weights — 30 / 45 / 25",
-      "verdict": "the weakest input here",
-      "comment": "The three cases span $1.07 to $4.39, a four-fold range, so the weights matter as much as the figures and there is very little to anchor them on: two quarters of the new business model, no contracted backlog, and no analyst dispersion worth the name on a $240M company. We put 30% on the bear case because the half-year cash-licensing decline and the empty backlog are hard evidence, and 25% on the bull case because a genuinely repeatable dataset franchise is plausible and would be worth far more than we are carrying. Read the range, not the point estimate: at these weights the fair value is $2.25, but shifting 15 points from bear to bull moves it to $2.75."
+      "label": "Scenario weights — 38 / 42 / 20",
+      "verdict": "still the weakest input here",
+      "comment": "The three cases span $0.79 to $2.87, a 3.6-fold range, so the weights matter as much as the figures and there is very little to anchor them on: two quarters of the new business model, essentially no contracted backlog, and no analyst dispersion worth the name on a $220M company. We have moved 8 points from bull to bear since the last report. That is not a change of view about the AI opportunity; it is what the first-half recurring cash-licensing figure, once the two non-recurring blocks are removed, does to the evidence. Read the range, not the point estimate: at these weights the fair value is $1.44, but shifting 15 points from bear to bull moves it to $1.75."
     }
   ]
 }

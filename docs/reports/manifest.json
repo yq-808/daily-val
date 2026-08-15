@@ -400,11 +400,11 @@
       "symbol": "CURI",
       "method": "sotp",
       "anchor": "FY2027",
-      "parts_intro": "CuriosityStream reports one segment, but it runs three economically different streams, and the 10-Q discloses enough to separate them. A slowly shrinking subscription business. A licensing business that is genuinely growing. And, sitting inside that licensing line, a large and fast-growing block of trade-and-barter revenue \u2014 content swapped for content, on which no cash ever changes hands. Averaging those into one multiple would bury the only question that matters.",
-      "figures_intro": "Each part's expected FY2027 figure times the multiple that stream deserves on its own merits. The barter block is carried at nil in the bear and base cases: it is real revenue under GAAP, it is not cash, and it cannot pay a dividend.",
-      "fundamentals_source": "Segment splits and the barter block are as reported in the Q2 2026 10-Q (filed 13 Aug 2026) and the FY2025 10-K; the FY2027 figures are our own estimates, extrapolated from those disclosures and management's FY2026 guidance of $77\u201382M revenue.",
+      "parts_intro": "CuriosityStream reports one segment, but it runs three economically different streams, and the 10-Q discloses enough to separate them. A slowly shrinking subscription business. A licensing business whose reported growth is almost entirely two things that are not recurring cash: a large block of trade-and-barter revenue, content swapped for content on which no money changes hands, and \u2014 new this quarter \u2014 an $8.5M licence sold to the buyer of three divested brands, collected in instalments from 2027. Averaging those into one multiple would bury the only question that matters.",
+      "figures_intro": "Each part's expected FY2027 figure times the multiple that stream deserves on its own merits. Barter is carried at nil in the bear and base cases: it is real revenue under GAAP, it is not cash, and it cannot pay a dividend. The Curiosity Brands licence is not a part at all \u2014 it is a fixed receivable already sitting on the balance sheet, so it is carried in the bridge at its filed present value rather than capitalised at a revenue multiple.",
+      "fundamentals_source": "Segment splits, the barter block, the Curiosity Brands licence (Note 16) and the Citibank revolver are as reported in the Q2 2026 10-Q (filed 13 Aug 2026); prior-year figures from the FY2025 10-K. The FY2027 figures are our own estimates, extrapolated from those disclosures and management's raised FY2026 guidance of $77\u201382M revenue.",
       "balance_sheet": {
-        "net_cash": "10.9M",
+        "net_cash": "8.9M",
         "diluted_shares": "61.5M"
       },
       "parts": [
@@ -413,29 +413,35 @@
           "name": "Subscription, bundled distribution & advertising",
           "basis": "revenue",
           "comparable": "No-growth niche SVOD, ~1\u00d7 sales",
-          "note": "Direct-to-consumer is in structural decline ($31.3M in FY2024 \u2192 $23.8M in FY2025); partner/bundled distribution is growing but not fast enough to offset it. Management says outright it is running this for durable economics rather than growth. Includes the small advertising and sponsorship line."
+          "note": "Direct-to-consumer is in structural decline ($31.3M in FY2024 \u2192 $23.8M in FY2025); partner/bundled distribution is growing but not fast enough to offset it. Management says outright it is running this for durable economics rather than growth. Includes the small advertising and sponsorship line, and from 1 July 2026 the consolidation of Spiegel Venture."
         },
         {
           "key": "licensing_cash",
-          "name": "Content & data licensing \u2014 cash",
+          "name": "Content & data licensing \u2014 recurring cash",
           "basis": "revenue",
           "comparable": "Content libraries 2\u20133\u00d7; AI-data licensors 4\u20138\u00d7",
-          "note": "Traditional factual-video licensing plus the AI training datasets and the 880-billion-token code corpus \u2014 the part of the licensing line that actually settles in cash. This single number decides the valuation."
+          "note": "Traditional factual-video licensing plus the AI training datasets and the 880-billion-token code corpus \u2014 the part of the licensing line that both settles in cash and could recur. Excludes barter, and excludes the one-off Curiosity Brands licence. This single number decides the valuation."
         },
         {
           "key": "licensing_barter",
           "name": "Content licensing \u2014 trade & barter (non-cash)",
           "basis": "revenue",
           "comparable": "No cash, no dividend capacity \u2014 carried at nil",
-          "note": "Content-for-content swaps, booked as licensing revenue with the received content capitalised as an asset. FY2025 barter revenue was $12.6M against $18K of matching cost, so it lands almost entirely in gross profit while generating no cash and creating a future amortisation charge."
+          "note": "Content-for-content swaps, booked as licensing revenue with the received content capitalised as an asset. In the first half of 2026, $9.2M of barter revenue met exactly $0 of matching cost, so it lands entirely in gross profit while generating no cash and creating a future amortisation charge."
         }
       ],
       "adjustments": [
         {
+          "key": "licensing_receivable",
+          "name": "Curiosity Brands licence receivable, at filed PV",
+          "amount": "8.5M",
+          "comment": "The $10M licence sold on 30 June 2026, receivable as four annual instalments of $2.5M from June 2027 and booked at a 7% discount. Contracted cash, so it belongs in the bridge \u2014 but it is a fixed asset already earned, not a revenue stream, and capitalising it at a sales multiple as well would count it twice."
+        },
+        {
           "key": "equity_investees",
           "name": "Equity-method investees, at book",
           "amount": "3.7M",
-          "comment": "Non-core holdings carried at balance-sheet value."
+          "comment": "Non-core holdings carried at balance-sheet value. Spiegel Venture is not among them; it was carried at zero and was bought outright on 1 July 2026."
         },
         {
           "key": "leases",
@@ -447,34 +453,37 @@
       "scenarios": [
         {
           "name": "Bear",
-          "probability": 0.3,
-          "comment": "The 2025\u201326 data-licensing burst was a one-off sale of a back catalogue, not a business. Buyers who have bought the corpus do not buy it twice; cash licensing falls back toward its pre-boom run rate and the multiple compresses to a library multiple.",
+          "probability": 0.38,
+          "comment": "The 2025\u201326 data-licensing burst was a one-off sale of a back catalogue, not a business, and the first half of 2026 is what that looks like once barter and the disposal licence are stripped out. Buyers who have bought the corpus do not buy it twice; recurring cash licensing settles near its traditional-library level and the multiple compresses to a library multiple. The Curiosity Brands instalments are haircut for a counterparty that paid $0.3M for the brands and owes $10M for the licence.",
           "parts": {
             "subscription": {
               "amount": "33M",
               "multiple": 0.8
             },
             "licensing_cash": {
-              "amount": "19M",
+              "amount": "6M",
               "multiple": 1.5
             },
             "licensing_barter": {
               "amount": "14M",
               "multiple": 0
             }
+          },
+          "adjustments": {
+            "licensing_receivable": "4.2M"
           }
         },
         {
           "name": "Base",
-          "probability": 0.45,
-          "comment": "Cash licensing keeps growing, but at the pace the cash line has actually shown rather than the pace the headline suggests: roughly $25M in FY2026 to $27M in FY2027. Subscription erodes a few percent. Barter keeps inflating reported revenue and is worth nothing.",
+          "probability": 0.42,
+          "comment": "Management delivers part of the second-half ramp its guidance requires but not all of it: recurring cash licensing recovers from a $2.4M first half to roughly $10M in FY2026 and $12M in FY2027, which is well above the current run rate and well below the headline. Subscription erodes a few percent. Barter keeps inflating reported revenue and is worth nothing.",
           "parts": {
             "subscription": {
               "amount": "35M",
               "multiple": 1.0
             },
             "licensing_cash": {
-              "amount": "27M",
+              "amount": "12M",
               "multiple": 2.5
             },
             "licensing_barter": {
@@ -485,15 +494,15 @@
         },
         {
           "name": "Bull",
-          "probability": 0.25,
-          "comment": "The 17 productised datasets and the code corpus turn out to be a repeatable franchise with a renewing customer base rather than a catalogue clearance \u2014 cash licensing compounds to $42M and earns a data-licensor multiple. Some of the barter is genuinely convertible into cash later.",
+          "probability": 0.2,
+          "comment": "The 880-billion-token code corpus and the productised datasets turn out to be a repeatable franchise with a renewing customer base rather than a catalogue clearance \u2014 recurring cash licensing compounds to $22M and earns a data-licensor multiple. Some of the barter is genuinely convertible into cash later.",
           "parts": {
             "subscription": {
               "amount": "36M",
               "multiple": 1.2
             },
             "licensing_cash": {
-              "amount": "42M",
+              "amount": "22M",
               "multiple": 5.0
             },
             "licensing_barter": {
@@ -504,16 +513,16 @@
         }
       ],
       "market": {
-        "price": 3.99,
-        "as_of": "2026-08-13",
+        "price": 3.55,
+        "as_of": "2026-08-14",
         "solve_for": "licensing_cash",
-        "commentary": "The price is not an input to anything above. Read the other way: crediting the subscription business and the cash at our own figures, the market is paying roughly 7.4\u00d7 FY2027 cash licensing revenue \u2014 or, at our 2.5\u00d7, it is assuming about $80M of cash licensing revenue against our $27M. Cash licensing in the first half of 2026 was $10.9M, down from $11.3M a year earlier. Getting to $80M is not an extrapolation of that line; it is a different business."
+        "commentary": "The price is not an input to anything above. Read the other way: crediting the subscription business, the licence receivable and the cash at our own figures, the market is paying roughly 14\u00d7 FY2027 recurring cash licensing revenue \u2014 or, at our 2.5\u00d7, it is assuming about $66M of it against our $12M. Recurring cash licensing in the first half of 2026, once barter and the Curiosity Brands licence are removed, was $2.4M, down from $11.3M a year earlier. Getting to $66M is not an extrapolation of that line; it is a different business. The stock fell 11% on 14 August, the day after the 10-Q disclosed what the 12 August earnings release did not."
       },
       "action": {
         "confidence": "low",
         "buy_below": "Bear",
-        "rationale": "The crux driver reads weak evidence and the cash-licensing multiple spans 1.5x to 5.0x, which alone moves the answer four-fold; the notes call the scenario weights the weakest input in the report. So the accumulate level is the bear case itself, not a discount to a weighted value those weights produced.",
-        "review": "First-half cash licensing turns up against the prior year, or barter stops growing as a share of revenue."
+        "rationale": "The crux driver reads very weak evidence: the line the valuation turns on shrank 79% year on year once the two non-recurring blocks are removed, and its multiple spans 1.5\u00d7 to 5.0\u00d7, which alone moves the answer four-fold. The notes still call the scenario weights the weakest input in the report. So the accumulate level is the bear case itself, not a discount to a weighted value those weights produced.",
+        "review": "Second-half recurring cash licensing \u2014 reported licensing less barter, less the Curiosity Brands instalments \u2014 turns up against the prior year, or contracted backlog starts to carry the recurring revenue management describes."
       }
     }
   },
