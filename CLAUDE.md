@@ -8,11 +8,11 @@ commands, worked examples and the action-band spec belong to
 `skills/<method>/SKILL.md` and `skills/shared/`. This file is the short list of
 rules a report must not break, whichever method it uses.
 
-## Three valuation methods, one pipeline
+## Four valuation methods, one pipeline
 
 Each report's input carries a **method**; the generator and the shared landing
 page dispatch on it. Same snapshot rules, same "generator does no math", and in
-all three the fair value is derived without reference to any market price.
+all four the fair value is derived without reference to any market price.
 
 - **DCF** (default, no `method` field) — FCFF. For durable compounders.
 - **Relative comps** (`"method": "comps"`) — peer/re-rating multiples on a
@@ -28,14 +28,23 @@ all three the fair value is derived without reference to any market price.
   is non-cash barter). Only split along lines the filings actually disclose — an
   invented allocation is worse than an honest single multiple — and do not
   subtract corporate overhead on top of peer multiples that already carry it.
+- **Operating leverage** (`"method": "opleverage"`) — earnings are *built*, not
+  assumed: revenue × gross margin, less a cost base in dollars, then a multiple.
+  For businesses whose large fixed cost base makes a few points of gross margin
+  the entire valuation (e.g. FORM: nine years at 39–42% gross margin, then 50.7%
+  in one quarter). Never express opex as a percentage of revenue — that assumes
+  the leverage away, which is the error the method exists to prevent — and always
+  carry a `history[]` of filed actuals, run through the same bridge, so an
+  assumed margin is read against every margin the company has actually earned.
 
 | Method | Skill (how to build one) | Engine | Inputs |
 |--------|--------------------------|--------|--------|
 | DCF | `skills/dcf/SKILL.md` | `docs/assets/dcf.js` | `skills/dcf/reference/` |
 | Comps | `skills/relative-comps/SKILL.md` | `docs/assets/comps.js` | `skills/relative-comps/reference/` |
 | SOTP | `skills/sum-of-the-parts/SKILL.md` | `docs/assets/sotp.js` | `skills/sum-of-the-parts/reference/` |
+| Op leverage | `skills/operating-leverage/SKILL.md` | `docs/assets/opleverage.js` | `skills/operating-leverage/reference/` |
 
-Shared across all three: the action band — `skills/shared/action-band.md`,
+Shared across all four: the action band — `skills/shared/action-band.md`,
 engine `docs/assets/action.js`.
 
 The generator resolves `<SYM>.json` from any reference root; the input's

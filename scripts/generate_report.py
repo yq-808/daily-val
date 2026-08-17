@@ -20,7 +20,8 @@ Each run:
   1. reads skills/dcf/reference/inputs/<SYMBOL>.json (+ notes sidecar),
   2. writes docs/reports/<symbol>/<date>.json — the frozen data copy of record
      ({input, notes}), the report's own inspectable snapshot,
-  3. writes docs/reports/<symbol>/<date>.html (inputs+notes embedded, math in JS),
+  3. writes docs/reports/<symbol>/<date>.html (inputs+notes embedded, math in JS;
+     the input's "method" selects the engine — dcf, comps, sotp or opleverage),
   4. records the run (inputs + snapshot path) in docs/reports/manifest.json,
   5. rebuilds docs/index.html, which computes each report's intrinsic in JS.
 """
@@ -36,10 +37,11 @@ ROOT = Path(__file__).resolve().parent.parent
 DCF_REF = ROOT / "skills" / "dcf" / "reference"
 COMPS_REF = ROOT / "skills" / "relative-comps" / "reference"
 SOTP_REF = ROOT / "skills" / "sum-of-the-parts" / "reference"
+OPLEV_REF = ROOT / "skills" / "operating-leverage" / "reference"
 # Where the generator looks up a symbol's working-draft inputs + notes. The
 # input's own "method" field selects the client-side engine; the reference file
 # can live under either skill's reference tree.
-REF_ROOTS = [DCF_REF, COMPS_REF, SOTP_REF]
+REF_ROOTS = [DCF_REF, COMPS_REF, SOTP_REF, OPLEV_REF]
 DOCS = ROOT / "docs"
 REPORTS_DIR = DOCS / "reports"
 MANIFEST = REPORTS_DIR / "manifest.json"
@@ -70,6 +72,25 @@ SOTP_REVERSE_CONVENTIONS = (
 )
 
 
+OPLEV_CONVENTIONS = (
+    "Operating leverage — earnings are not assumed but built, from a revenue "
+    "level and a gross margin less a dollar cost base, then carried at a "
+    "multiple. Valuation only — no live market price is used."
+)
+OPLEV_REVERSE_CONVENTIONS = (
+    "Operating leverage — earnings are not assumed but built, from a revenue "
+    "level and a gross margin less a dollar cost base, then carried at a "
+    "multiple, all computed without reference to any market price. The market "
+    "price appears only in the closing section, which runs the same bridge "
+    "backwards to read off the margin or the revenue it would require; it is "
+    "never an input to the valuation."
+)
+
+
+def is_oplev(data):
+    return isinstance(data, dict) and data.get("method") == "opleverage"
+
+
 def is_comps(data):
     return isinstance(data, dict) and data.get("method") == "comps"
 
@@ -90,6 +111,8 @@ def conventions_for(data):
 
 
 def _base_conventions(data):
+    if is_oplev(data):
+        return OPLEV_REVERSE_CONVENTIONS if data.get("market") else OPLEV_CONVENTIONS
     if is_sotp(data):
         return SOTP_REVERSE_CONVENTIONS if data.get("market") else SOTP_CONVENTIONS
     if is_comps(data):
@@ -162,6 +185,9 @@ def load_json(path):
 
 def method_for(data):
     """Human label for the model type — derivable without running the engine."""
+    if is_oplev(data):
+        anchor = data.get("anchor")
+        return "Operating leverage — earnings-power bridge" + (f" ({anchor})" if anchor else "")
     if is_sotp(data):
         anchor = data.get("anchor")
         return "Sum of the parts" + (f" ({anchor})" if anchor else "")
@@ -574,6 +600,159 @@ def render_sotp_report(symbol, data, date_str, notes=None, snapshot_name=None):
 """
 
 
+# --------------------------------------------------------------------------- #
+# HTML rendering — operating-leverage report. Same contract as the others:
+# inputs (+ notes) are embedded; docs/assets/opleverage.js fills the numbers
+# client-side. The fair value is derived without any market price.
+# --------------------------------------------------------------------------- #
+def render_oplev_report(symbol, data, date_str, notes=None, snapshot_name=None):
+    sym = escape(symbol)
+    method = escape(method_for(data))
+    anchor = escape(str(data.get("anchor", "")))
+    notes = notes or {}
+    snapshot_name = snapshot_name or f"{date_str}.json"
+
+    fv_label = f"Fair value{f' \u00b7 {anchor}' if anchor else ''}"
+
+    history_intro = data.get("history_intro") or (
+        "The company's own filed figures, run through the same bridge used for "
+        "the future below. An assumed margin has to be read against the margins "
+        "actually earned, in the same units, in the same table."
+    )
+    bridge_intro = data.get("bridge_intro") or (
+        "No earnings figure is assumed. Each case names a revenue level, a gross "
+        "margin and a dollar cost base, and the earnings fall out of them."
+    )
+
+    history_section = ""
+    if data.get("history"):
+        history_section = f"""
+  <section>
+    <h2>1 &middot; What the business has actually earned</h2>
+    <p class="meta">{escape(history_intro)}</p>
+    <div id="opl-history"></div>
+  </section>
+"""
+
+    sens_section = ""
+    if data.get("sensitivity"):
+        sens_section = """
+  <section>
+    <h2>4 &middot; Where the answer actually comes from</h2>
+    <p class="meta">Against a largely fixed cost base, value per share is far
+    more sensitive to the gross margin than to anything else in the model. This
+    grid is the honest summary of the report: pick a revenue level and a margin,
+    and read off what the business is worth.</p>
+    <div id="opl-sensitivity"></div>
+  </section>
+"""
+
+    # The one section a price may touch, and it runs *backwards*: hold the cost
+    # base, the tax rate, the share count and the multiple, and solve for the
+    # margin — or the revenue — the traded price is asking for. The fair value
+    # above is already fixed before the price is read.
+    market_section = ""
+    if data.get("market"):
+        market_section = """
+  <section>
+    <h2>5 &middot; What the price requires</h2>
+    <p class="meta">Everything above was computed without looking at the market.
+    Here we run the same bridge in reverse \u2014 take the traded price as given,
+    hold the cost base, the tax rate, the share count and the multiple at
+    <em>our</em> figures, and solve for the earnings it implies. Then express
+    that requirement two ways: as a gross margin at our revenue, and as a
+    revenue at our gross margin.</p>
+    <div id="opl-market"></div>
+  </section>
+"""
+
+    act_levels = action_levels(data, "opl-action")
+    act_section = action_section(data, date_str, "opl-action")
+    act_script = action_script(data)
+    notes_script = ""
+    if notes:
+        notes_script = f'\n<script type="application/json" id="opl-notes">{embed_json(notes)}</script>'
+
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{sym} valuation \u2014 {date_str} \u00b7 daily-val</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<main class="wrap">
+  <p class="crumb"><a href="../../index.html">\u2190 All reports</a></p>
+
+  <header class="rpt-head">
+    <div>
+      <h1>{sym} <span class="sub">valuation</span></h1>
+      <p class="meta" id="opl-method">{method}</p>
+    </div>
+    <div class="date-badge">{date_str}</div>
+  </header>
+
+  <section class="fairvalue-band">
+    <span class="fv-label">{fv_label}</span>
+    <span class="fv-value" id="opl-fairvalue">\u2026</span>{act_levels}
+  </section>
+  <noscript><p class="meta">This report computes its valuation in the browser;
+  enable JavaScript to see the numbers.</p></noscript>
+{history_section}
+  <section>
+    <h2>2 &middot; The bridge</h2>
+    <p class="meta">{escape(bridge_intro)}</p>
+    <p class="meta" id="opl-source"></p>
+    <div id="opl-bridge"></div>
+  </section>
+
+  <section>
+    <h2>3 &middot; The cases, weighted</h2>
+    <p class="meta">Revenue, margin, cost base and multiple move together, so
+    each case varies them jointly. The fair value is the probability-weighted
+    value per share across the cases.</p>
+    <div id="opl-scenarios"></div>
+  </section>
+{sens_section}
+  <section>
+    <h2>How good are these inputs?</h2>
+    <p class="meta">One read per input \u2014 what it rests on, and how hard it
+    would be to argue with. The gross margin and the scenario weights are the
+    two that decide this report.</p>
+    <div id="opl-drivers"></div>
+  </section>
+{market_section}{act_section}
+  <section>
+    <h2>Key inputs</h2>
+    <div class="table-scroll">
+      <table class="compact">
+        <tbody id="opl-key-inputs"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="disclaimer">
+    <p><strong>Not investment advice.</strong> An earnings-power bridge is only
+    as good as the margin assumed at the top of it \u2014 with a large fixed cost
+    base, a few points either way moves the answer a long way, which is exactly
+    why the model shows the margin rather than an earnings figure. The valuation
+    is computed in your browser from an embedded input snapshot using the
+    <code>opleverage</code> engine; it is a personal modeling exercise, not a
+    recommendation to buy or sell any security.</p>
+    <p class="meta">{escape(conventions_for(data))}</p>
+    <p class="snapshot">This report is a frozen daily snapshot. &rarr;
+    <a href="{escape(snapshot_name)}">Inputs &amp; evaluation behind this page</a></p>
+    <p class="gen">Generated {date_str} \u00b7 daily-val</p>
+  </footer>
+</main>
+<script type="application/json" id="opl-input">{embed_json(data)}</script>{notes_script}{act_script}
+<script src="../../assets/opleverage.js"></script>
+</body>
+</html>
+"""
+
+
 def render_index(entries):
     # The report list is NOT embedded here. The page reads it at runtime from
     # the reports/manifest.json data file and sorts it (date desc) client-side,
@@ -607,6 +786,7 @@ def render_index(entries):
 </main>
 <script src="assets/comps.js"></script>
 <script src="assets/sotp.js"></script>
+<script src="assets/opleverage.js"></script>
 <script src="assets/dcf.js"></script>
 </body>
 </html>
@@ -807,7 +987,9 @@ def main():
 
     # 2. Write report page (inputs+notes embedded; math runs in the browser).
     #    The input's method selects the engine + template.
-    if is_sotp(data):
+    if is_oplev(data):
+        render = render_oplev_report
+    elif is_sotp(data):
         render = render_sotp_report
     elif is_comps(data):
         render = render_comps_report

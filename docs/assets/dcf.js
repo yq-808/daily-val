@@ -600,13 +600,14 @@
   }
 
   // Headline number for a manifest entry, dispatched by method. Reports carrying
-  // an input.method are valued by the sibling engine of that name — COMPS or
-  // SOTP, both loaded alongside this script on the landing page; everything else
-  // is a DCF.
+  // an input.method are valued by the sibling engine of that name — COMPS, SOTP
+  // or OPLEV, all loaded alongside this script on the landing page; everything
+  // else is a DCF.
   function intrinsicOf(input) {
     var m = input && input.method;
     if (m === "comps" && global.COMPS) return global.COMPS.evaluate(input).intrinsic;
     if (m === "sotp" && global.SOTP) return global.SOTP.evaluate(input).intrinsic;
+    if (m === "opleverage" && global.OPLEV) return global.OPLEV.evaluate(input).intrinsic;
     return evaluate(input).intrinsic;
   }
 
@@ -618,6 +619,7 @@
     var m = input && input.method;
     if (m === "comps") return "$" + Math.round(v);
     if (m === "sotp" && global.SOTP) return global.SOTP.price(v);
+    if (m === "opleverage" && global.OPLEV) return global.OPLEV.price(v);
     return price(v);
   }
 
