@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FORM valuation — 2026-08-18 · daily-val</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<main class="wrap">
+  <p class="crumb"><a href="../../index.html">← All reports</a></p>
+
+  <header class="rpt-head">
+    <div>
+      <h1>FORM <span class="sub">valuation</span></h1>
+      <p class="meta" id="opl-method">Operating leverage — earnings-power bridge (FY2027)</p>
+    </div>
+    <div class="date-badge">2026-08-18</div>
+  </header>
+
+  <section class="fairvalue-band">
+    <span class="fv-label">Fair value · FY2027</span>
+    <span class="fv-value" id="opl-fairvalue">…</span>
+    <div class="fv-levels" id="opl-action-levels"></div>
+  </section>
+  <noscript><p class="meta">This report computes its valuation in the browser;
+  enable JavaScript to see the numbers.</p></noscript>
+
+  <section>
+    <h2>1 &middot; What the business has actually earned</h2>
+    <p class="meta">FormFactor&#x27;s filed results, run through the same bridge this report uses for the future. Gross margin sat in a 39.0–41.9% band for nine consecutive years, and operating income was no higher in 2025 than in 2017 despite 43% more revenue. Then Q2 FY2026 printed 50.7%. Everything below turns on whether that line is a new floor or a cycle peak.</p>
+    <div id="opl-history"></div>
+  </section>
+
+  <section>
+    <h2>2 &middot; The bridge</h2>
+    <p class="meta">No earnings figure is assumed. Each case names a revenue level, a gross margin and a dollar cost base, and the earnings fall out. That ordering is deliberate: with roughly $290M of largely fixed operating cost against $450–700M of gross profit, a few points of gross margin is the entire valuation, and stating EPS directly would bury the one assumption that matters.</p>
+    <p class="meta" id="opl-source"></p>
+    <div id="opl-bridge"></div>
+  </section>
+
+  <section>
+    <h2>3 &middot; The cases, weighted</h2>
+    <p class="meta">Revenue, margin, cost base and multiple move together, so
+    each case varies them jointly. The fair value is the probability-weighted
+    value per share across the cases.</p>
+    <div id="opl-scenarios"></div>
+  </section>
+
+  <section>
+    <h2>4 &middot; Where the answer actually comes from</h2>
+    <p class="meta">Against a largely fixed cost base, value per share is far
+    more sensitive to the gross margin than to anything else in the model. This
+    grid is the honest summary of the report: pick a revenue level and a margin,
+    and read off what the business is worth.</p>
+    <div id="opl-sensitivity"></div>
+  </section>
+
+  <section>
+    <h2>How good are these inputs?</h2>
+    <p class="meta">One read per input — what it rests on, and how hard it
+    would be to argue with. The gross margin and the scenario weights are the
+    two that decide this report.</p>
+    <div id="opl-drivers"></div>
+  </section>
+
+  <section>
+    <h2>5 &middot; What the price requires</h2>
+    <p class="meta">Everything above was computed without looking at the market.
+    Here we run the same bridge in reverse — take the traded price as given,
+    hold the cost base, the tax rate, the share count and the multiple at
+    <em>our</em> figures, and solve for the earnings it implies. Then express
+    that requirement two ways: as a gross margin at our revenue, and as a
+    revenue at our gross margin.</p>
+    <div id="opl-market"></div>
+  </section>
+
+  <section>
+    <h2>Why the band sits there</h2>
+    <p class="meta">The accumulate and trim levels at the top of this page are
+    set from the fair value and from how well this report's own inputs stand up
+    — never from the quote. Weak inputs earn a wider discount before acting, and
+    that mapping is fixed in the engine, so a report cannot award itself a level
+    that happens to clear the price. This is what the figures supported on
+    2026-08-18; a later report with different figures gets a different band.</p>
+    <div id="opl-action"></div>
+  </section>
+
+  <section>
+    <h2>Key inputs</h2>
+    <div class="table-scroll">
+      <table class="compact">
+        <tbody id="opl-key-inputs"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="disclaimer">
+    <p><strong>Not investment advice.</strong> An earnings-power bridge is only
+    as good as the margin assumed at the top of it — with a large fixed cost
+    base, a few points either way moves the answer a long way, which is exactly
+    why the model shows the margin rather than an earnings figure. The valuation
+    is computed in your browser from an embedded input snapshot using the
+    <code>opleverage</code> engine; it is a personal modeling exercise, not a
+    recommendation to buy or sell any security.</p>
+    <p class="meta">Operating leverage — earnings are not assumed but built, from a revenue level and a gross margin less a dollar cost base, then carried at a multiple, all computed without reference to any market price. The market price appears only in the closing section, which runs the same bridge backwards to read off the margin or the revenue it would require; it is never an input to the valuation. The accumulate/trim levels beside the fair value are derived from that value — a discount and a premium to this report&#x27;s own figures — and never from a market price.</p>
+    <p class="snapshot">This report is a frozen daily snapshot. &rarr;
+    <a href="2026-08-18.json">Inputs &amp; evaluation behind this page</a></p>
+    <p class="gen">Generated 2026-08-18 · daily-val</p>
+  </footer>
+</main>
+<script type="application/json" id="opl-input">{"symbol": "FORM", "method": "opleverage", "anchor": "FY2027", "history_intro": "FormFactor's filed results, run through the same bridge this report uses for the future. Gross margin sat in a 39.0\u201341.9% band for nine consecutive years, and operating income was no higher in 2025 than in 2017 despite 43% more revenue. Then Q2 FY2026 printed 50.7%. Everything below turns on whether that line is a new floor or a cycle peak.", "bridge_intro": "No earnings figure is assumed. Each case names a revenue level, a gross margin and a dollar cost base, and the earnings fall out. That ordering is deliberate: with roughly $290M of largely fixed operating cost against $450\u2013700M of gross profit, a few points of gross margin is the entire valuation, and stating EPS directly would bury the one assumption that matters.", "figures_source": "Balance sheet, share count and every history row are FormFactor's own filed figures (10-Q for the quarter ended June 27 2026; 10-K for FY2017\u2013FY2025). The FY2027 revenue, margin and cost lines are this report's estimates, not company guidance \u2014 FormFactor guides one quarter at a time and has guided Q3 FY2026 to $270M \u00b1 $10M.", "fundamentals": {"revenue": "1.15B", "gross_margin": 0.48, "opex": "310M", "other_income": "10M", "tax_rate": 0.15}, "balance_sheet": {"net_cash": "334M", "diluted_shares": "80M"}, "multiple": {"kind": "pe", "value": 26}, "history": [{"period": "FY2017", "revenue": "548.441M", "gross_margin": 0.393109, "opex": "169.296M"}, {"period": "FY2018", "revenue": "529.675M", "gross_margin": 0.39711, "opex": "174.230M"}, {"period": "FY2019", "revenue": "589.464M", "gross_margin": 0.402902, "opex": "187.834M"}, {"period": "FY2020", "revenue": "693.616M", "gross_margin": 0.4151, "opex": "204.132M"}, {"period": "FY2021", "revenue": "769.674M", "gross_margin": 0.419355, "opex": "224.729M"}, {"period": "FY2022", "revenue": "747.937M", "gross_margin": 0.395767, "opex": "241.097M"}, {"period": "FY2023", "revenue": "663.102M", "gross_margin": 0.389955, "opex": "248.777M", "note": "GAAP operating income was $82.8M; $73.0M of that was a gain on sale of business booked inside operating income. The bridge excludes it."}, {"period": "FY2024", "revenue": "763.599M", "gross_margin": 0.403252, "opex": "263.724M", "note": "GAAP operating income was $64.8M, including a $20.6M gain on sale of business. Excluded here."}, {"period": "FY2025", "revenue": "784.993M", "gross_margin": 0.393444, "opex": "251.781M", "note": "Opex includes $3.0M of factory start-up cost. No divestiture gain this year."}, {"period": "Q1 FY2026 ann.", "revenue": "904.576M", "gross_margin": 0.3838, "opex": "280.584M", "note": "Quarter annualized. Gross margin was held down by $23.9M of unallocated cost of revenues, including acquisition fixed-asset step-up."}, {"period": "Q2 FY2026 ann.", "revenue": "1032.968M", "gross_margin": 0.506974, "opex": "292.492M", "note": "Quarter annualized. Unallocated cost of revenues fell to $6.7M. Probe Cards segment gross margin 54.4%, against 38.3% a year earlier."}], "scenarios": [{"name": "Bear", "probability": 0.25, "fundamentals": {"revenue": "950M", "gross_margin": 0.42, "opex": "290M"}, "multiple": 18, "comment": "HBM4 buildout digests and probe-card pricing normalizes as Micronics Japan and Technoprobe compete for the same sockets. Revenue falls 8% from FY2026 \u2014 smaller than the 11% drop FormFactor took in 2023 \u2014 and gross margin gives back most of the step-up to 42%, still above any year before 2026. Opex is held flat. The multiple compresses to 18\u00d7 as the cycle turns."}, {"name": "Base", "probability": 0.45, "fundamentals": {"revenue": "1.15B", "gross_margin": 0.48, "opex": "310M"}, "multiple": 26, "comment": "The step-up is real but not fully durable. HBM probe cards carry a structurally richer margin than foundry and logic, and DRAM keeps gaining mix, but 48% sits below Q2's 50.7% because that quarter carried unusually low unallocated cost. Revenue grows 11% on HBM4 plus the co-packaged-optics ramp. 26\u00d7 is roughly where large semi-test peers trade."}, {"name": "Bull", "probability": 0.3, "fundamentals": {"revenue": "1.35B", "gross_margin": 0.53, "opex": "325M"}, "multiple": 34, "comment": "Test intensity re-rates the business permanently: HBM4 stacks need far more probe contact, co-packaged optics opens a second socket, and FormFactor holds share in both. Revenue grows 30% and Q2's margin proves a floor rather than a peak, giving a 29% operating margin \u2014 more than double anything in the filed record. A scarce-asset multiple of 34\u00d7 follows."}], "sensitivity": {"revenue": ["950M", "1.05B", "1.15B", "1.25B", "1.35B"], "gross_margin": [0.4, 0.44, 0.48, 0.51, 0.54]}, "market": {"price": 138.87, "as_of": "2026-08-17", "solve_from": "Base", "commentary": "The price is not asking for the base case with a better multiple \u2014 it is asking for a gross margin no test company has earned, or a revenue base 62% above the base case, or both in combination. That is the honest shape of the disagreement, and it is why this report ends well below the quote rather than near it."}, "action": {"confidence": "low", "buy_below": "Bear", "trim_above": 1.4, "rationale": "The cases run from $23 to $145 \u2014 a six-fold spread off one assumption, the gross margin, with two quarters of evidence on one side and nine years on the other. When the weights are doing that much of the work, a fraction of the weighted value is not a real margin of safety, so the accumulate level is the Bear case itself: the price at which the model still holds if the margin reverts most of the way. The trim level is a plain 1.4\u00d7 of fair value.", "review": "Two prints would settle it. If Probe Cards segment gross margin holds above 50% for two more quarters while DRAM revenue keeps climbing, the Bear case is wrong and the whole band should move up. If unallocated cost of revenues stays near Q2's $6.7M rather than reverting toward Q1's $23.9M, the consolidated margin is cleaner than modelled here. Conversely, a single quarter back below 45% consolidated gross margin would confirm the mix read and put the Bear case in play."}}</script>
+<script type="application/json" id="opl-notes">{"symbol": "FORM", "as_of": "2026-08-18", "drivers": [{"key": "gross_margin", "label": "Gross margin \u2014 the crux", "verdict": "The crux, and the evidence is two quarters against nine years", "comment": "For nine consecutive years FormFactor earned between 39.0% and 41.9%, with no trend. Q1 FY2026 printed 38.4% and Q2 printed 50.7% \u2014 a 12-point move in one quarter, on a quarter where cost of revenues fell $12M while revenue rose $32M. Part of that is genuine: Probe Cards segment margin went 38.3% \u2192 54.4% year over year, and DRAM (essentially HBM) is now 33% of revenue against 17% in FY2023, at a structurally richer margin. Part of it is not: unallocated cost of revenues fell from $23.9M in Q1 to $6.7M in Q2, and roughly $17M of that swing is acquisition step-up and other charges that happened to land in Q1. The base case takes 48% rather than Q2's 50.7% for exactly that reason. Nothing in this report is more worth arguing with than this number."}, {"key": "revenue", "label": "Revenue level", "verdict": "Well supported near-term, an estimate beyond FY2026", "comment": "H1 FY2026 revenue was $484.4M and management has guided Q3 to $270M \u00b1 $10M, which puts FY2026 near $1.03B against $785.0M in FY2025. That part is close to known. The FY2027 figures are this report's own. Worth noting what changed: Foundry & Logic was flat for three straight years ($363.5M \u2192 $381.2M \u2192 $369.9M) while all growth came from DRAM ($113.8M \u2192 $247.4M). In Q2 FY2026 both grew \u2014 F&L +22% and DRAM +49% year over year \u2014 which is the first time in this cycle the non-HBM half has contributed. The Bear case does not assume a collapse, only an 8% decline; FormFactor's revenue fell 11% in FY2023."}, {"key": "opex", "label": "Operating cost base", "verdict": "Well supported, and the reason the model is so levered", "comment": "Q2 FY2026 operating expense ran $73.1M, or $292M annualized: R&D $31.1M, SG&A $37.2M, and $4.9M of factory start-up cost \u2014 a line that did not exist before FY2025 and totalled $11.9M in H1 alone. Opex has risen every year for nine years, from $169.3M in FY2017 to $251.8M in FY2025, and it did not fall in the FY2023 downturn. Treating it as broadly fixed is the right read, and it is precisely what makes a few points of gross margin worth so much: against a ~$300M cost base, four points of margin on $1.15B of revenue is $46M of EBIT, roughly FormFactor's entire operating income in a normal year."}, {"key": "history", "label": "The filed record", "verdict": "Filed figures, with two GAAP distortions removed", "comment": "Every history row is taken from the 10-Ks, but reported operating income needed correcting twice. FY2023 GAAP operating income was $82.8M \u2014 of which $73.0M was a gain on sale of business, booked inside operating income. Strip it and FormFactor earned $9.8M on $663.1M of revenue, a 1.5% operating margin. FY2024's $64.8M likewise included $20.6M of divestiture gain, leaving $44.2M. Anyone anchoring on reported operating income would conclude the business earns $60\u201380M through the cycle; on operations alone it earned $9.8M in its worst recent year and never more than $98.0M, set in FY2021."}, {"key": "multiple", "label": "P/E multiple", "verdict": "A judgment call, and it swings the answer nearly as much as the margin", "comment": "The cases carry 18\u00d7 / 26\u00d7 / 34\u00d7. Large semiconductor test and process-control peers \u2014 Teradyne, Advantest, Onto, Camtek, KLA \u2014 have generally traded in the high-20s to mid-30s through this AI cycle, so 26\u00d7 is not a punitive base. Two things argue for less: FormFactor is far smaller and more cyclical than any of them, and its customer base is concentrated enough to be a single-decision risk \u2014 Taiwan and South Korea together were 65% of Q2 revenue. Note that the multiple and the margin compound: the Bull case is 1.8\u00d7 the Bear on gross margin but 6.4\u00d7 on value, and about half of that gap is the multiple, not the business."}, {"key": "tax_rate", "label": "Tax rate", "verdict": "Held flat at 15%, and probably generous", "comment": "FormFactor's effective rate was 11.1% in Q2 FY2026 and 8.9% for H1, well below the FY2025 full-year rate. The company carries $90.9M of deferred tax assets and benefits from where its profit is earned. Holding 15% across all three cases is a simplification: it is above the current run rate, so it is not flattering the answer, but it is not stressed either. It is held constant deliberately \u2014 it is not the crux, and varying it would only obscure the two lines that are. A 5-point error here moves the base case about $4 a share."}, {"key": "shares", "label": "Diluted shares", "verdict": "Well supported", "comment": "79.6M diluted in Q2 FY2026, up from 77.5M a year earlier. Stock-based compensation has run $38\u201340M a year and the count has drifted up roughly 1% a year net of repurchases. 80M for FY2027 is a mild assumption; it is not where the uncertainty lives."}, {"key": "net_cash", "label": "Net cash", "verdict": "Filed, and immaterial to the answer", "comment": "Cash of $109.8M plus $235.9M of marketable securities against an $11.7M building term loan leaves about $334M net cash at June 27 2026; the $150M revolver is undrawn. Because the valuation runs on P/E rather than enterprise value, the cash enters only through the $10M of interest income in the bridge. At roughly 3% of the market capitalization it does not decide anything either way, and is reported here for completeness rather than because it moves the number."}, {"key": "probability", "label": "Scenario weights", "verdict": "Doing more work than the evidence supports \u2014 the weakest part of this report", "comment": "25 / 45 / 30 across cases that span $22.76 to $144.68. A six-fold spread means the weights, not the arithmetic, are setting the fair value: shifting 15 points from Bear to Bull moves it about $18 a share, more than most of the individual assumptions do. The tilt toward Bull over Bear reflects that the margin step-up has now held for two quarters and that both end markets grew in Q2, not a belief that the Bull case is likely. This is why the report declares low confidence and sets its accumulate level at the Bear case rather than at a fraction of a weighted number that inherits this weakness."}]}</script>
+<script src="../../assets/action.js"></script>
+<script src="../../assets/opleverage.js"></script>
+</body>
+</html>

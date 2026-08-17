@@ -1,0 +1,60 @@
+{
+  "symbol": "FORM",
+  "as_of": "2026-08-18",
+  "drivers": [
+    {
+      "key": "gross_margin",
+      "label": "Gross margin — the crux",
+      "verdict": "The crux, and the evidence is two quarters against nine years",
+      "comment": "For nine consecutive years FormFactor earned between 39.0% and 41.9%, with no trend. Q1 FY2026 printed 38.4% and Q2 printed 50.7% — a 12-point move in one quarter, on a quarter where cost of revenues fell $12M while revenue rose $32M. Part of that is genuine: Probe Cards segment margin went 38.3% → 54.4% year over year, and DRAM (essentially HBM) is now 33% of revenue against 17% in FY2023, at a structurally richer margin. Part of it is not: unallocated cost of revenues fell from $23.9M in Q1 to $6.7M in Q2, and roughly $17M of that swing is acquisition step-up and other charges that happened to land in Q1. The base case takes 48% rather than Q2's 50.7% for exactly that reason. Nothing in this report is more worth arguing with than this number."
+    },
+    {
+      "key": "revenue",
+      "label": "Revenue level",
+      "verdict": "Well supported near-term, an estimate beyond FY2026",
+      "comment": "H1 FY2026 revenue was $484.4M and management has guided Q3 to $270M ± $10M, which puts FY2026 near $1.03B against $785.0M in FY2025. That part is close to known. The FY2027 figures are this report's own. Worth noting what changed: Foundry & Logic was flat for three straight years ($363.5M → $381.2M → $369.9M) while all growth came from DRAM ($113.8M → $247.4M). In Q2 FY2026 both grew — F&L +22% and DRAM +49% year over year — which is the first time in this cycle the non-HBM half has contributed. The Bear case does not assume a collapse, only an 8% decline; FormFactor's revenue fell 11% in FY2023."
+    },
+    {
+      "key": "opex",
+      "label": "Operating cost base",
+      "verdict": "Well supported, and the reason the model is so levered",
+      "comment": "Q2 FY2026 operating expense ran $73.1M, or $292M annualized: R&D $31.1M, SG&A $37.2M, and $4.9M of factory start-up cost — a line that did not exist before FY2025 and totalled $11.9M in H1 alone. Opex has risen every year for nine years, from $169.3M in FY2017 to $251.8M in FY2025, and it did not fall in the FY2023 downturn. Treating it as broadly fixed is the right read, and it is precisely what makes a few points of gross margin worth so much: against a ~$300M cost base, four points of margin on $1.15B of revenue is $46M of EBIT, roughly FormFactor's entire operating income in a normal year."
+    },
+    {
+      "key": "history",
+      "label": "The filed record",
+      "verdict": "Filed figures, with two GAAP distortions removed",
+      "comment": "Every history row is taken from the 10-Ks, but reported operating income needed correcting twice. FY2023 GAAP operating income was $82.8M — of which $73.0M was a gain on sale of business, booked inside operating income. Strip it and FormFactor earned $9.8M on $663.1M of revenue, a 1.5% operating margin. FY2024's $64.8M likewise included $20.6M of divestiture gain, leaving $44.2M. Anyone anchoring on reported operating income would conclude the business earns $60–80M through the cycle; on operations alone it earned $9.8M in its worst recent year and never more than $98.0M, set in FY2021."
+    },
+    {
+      "key": "multiple",
+      "label": "P/E multiple",
+      "verdict": "A judgment call, and it swings the answer nearly as much as the margin",
+      "comment": "The cases carry 18× / 26× / 34×. Large semiconductor test and process-control peers — Teradyne, Advantest, Onto, Camtek, KLA — have generally traded in the high-20s to mid-30s through this AI cycle, so 26× is not a punitive base. Two things argue for less: FormFactor is far smaller and more cyclical than any of them, and its customer base is concentrated enough to be a single-decision risk — Taiwan and South Korea together were 65% of Q2 revenue. Note that the multiple and the margin compound: the Bull case is 1.8× the Bear on gross margin but 6.4× on value, and about half of that gap is the multiple, not the business."
+    },
+    {
+      "key": "tax_rate",
+      "label": "Tax rate",
+      "verdict": "Held flat at 15%, and probably generous",
+      "comment": "FormFactor's effective rate was 11.1% in Q2 FY2026 and 8.9% for H1, well below the FY2025 full-year rate. The company carries $90.9M of deferred tax assets and benefits from where its profit is earned. Holding 15% across all three cases is a simplification: it is above the current run rate, so it is not flattering the answer, but it is not stressed either. It is held constant deliberately — it is not the crux, and varying it would only obscure the two lines that are. A 5-point error here moves the base case about $4 a share."
+    },
+    {
+      "key": "shares",
+      "label": "Diluted shares",
+      "verdict": "Well supported",
+      "comment": "79.6M diluted in Q2 FY2026, up from 77.5M a year earlier. Stock-based compensation has run $38–40M a year and the count has drifted up roughly 1% a year net of repurchases. 80M for FY2027 is a mild assumption; it is not where the uncertainty lives."
+    },
+    {
+      "key": "net_cash",
+      "label": "Net cash",
+      "verdict": "Filed, and immaterial to the answer",
+      "comment": "Cash of $109.8M plus $235.9M of marketable securities against an $11.7M building term loan leaves about $334M net cash at June 27 2026; the $150M revolver is undrawn. Because the valuation runs on P/E rather than enterprise value, the cash enters only through the $10M of interest income in the bridge. At roughly 3% of the market capitalization it does not decide anything either way, and is reported here for completeness rather than because it moves the number."
+    },
+    {
+      "key": "probability",
+      "label": "Scenario weights",
+      "verdict": "Doing more work than the evidence supports — the weakest part of this report",
+      "comment": "25 / 45 / 30 across cases that span $22.76 to $144.68. A six-fold spread means the weights, not the arithmetic, are setting the fair value: shifting 15 points from Bear to Bull moves it about $18 a share, more than most of the individual assumptions do. The tilt toward Bull over Bear reflects that the margin step-up has now held for two quarters and that both end markets grew in Q2, not a belief that the Bull case is likely. This is why the report declares low confidence and sets its accumulate level at the Bear case rather than at a fraction of a weighted number that inherits this weakness."
+    }
+  ]
+}
