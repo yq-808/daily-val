@@ -21,7 +21,8 @@ Each run:
   2. writes docs/reports/<symbol>/<date>.json — the frozen data copy of record
      ({input, notes}), the report's own inspectable snapshot,
   3. writes docs/reports/<symbol>/<date>.html (inputs+notes embedded, math in JS;
-     the input's "method" selects the engine — dcf, comps, sotp or opleverage),
+     the input's "method" selects the engine — dcf, comps, sotp,
+     opleverage or breakeven),
   4. records the run (inputs + snapshot path) in docs/reports/manifest.json,
   5. rebuilds docs/index.html, which computes each report's intrinsic in JS.
 """
@@ -38,10 +39,11 @@ DCF_REF = ROOT / "skills" / "dcf" / "reference"
 COMPS_REF = ROOT / "skills" / "relative-comps" / "reference"
 SOTP_REF = ROOT / "skills" / "sum-of-the-parts" / "reference"
 OPLEV_REF = ROOT / "skills" / "operating-leverage" / "reference"
+BEV_REF = ROOT / "skills" / "breakeven" / "reference"
 # Where the generator looks up a symbol's working-draft inputs + notes. The
 # input's own "method" field selects the client-side engine; the reference file
 # can live under either skill's reference tree.
-REF_ROOTS = [DCF_REF, COMPS_REF, SOTP_REF, OPLEV_REF]
+REF_ROOTS = [DCF_REF, COMPS_REF, SOTP_REF, OPLEV_REF, BEV_REF]
 DOCS = ROOT / "docs"
 REPORTS_DIR = DOCS / "reports"
 MANIFEST = REPORTS_DIR / "manifest.json"
@@ -87,6 +89,27 @@ OPLEV_REVERSE_CONVENTIONS = (
 )
 
 
+BEV_CONVENTIONS = (
+    "Fixed-cost breakeven — the gross margin is derived, not assumed: a revenue "
+    "level meets a cost base carried in dollars, and each case is valued on "
+    "whichever is higher, a multiple of its earnings or a floor multiple of its "
+    "revenue. Valuation only — no live market price is used."
+)
+BEV_REVERSE_CONVENTIONS = (
+    "Fixed-cost breakeven — the gross margin is derived, not assumed: a revenue "
+    "level meets a cost base carried in dollars, and each case is valued on "
+    "whichever is higher, a multiple of its earnings or a floor multiple of its "
+    "revenue, all computed without reference to any market price. The market "
+    "price appears only in the closing section, which runs the same arithmetic "
+    "backwards to read off the revenue it would require; it is never an input "
+    "to the valuation."
+)
+
+
+def is_bev(data):
+    return isinstance(data, dict) and data.get("method") == "breakeven"
+
+
 def is_oplev(data):
     return isinstance(data, dict) and data.get("method") == "opleverage"
 
@@ -111,6 +134,8 @@ def conventions_for(data):
 
 
 def _base_conventions(data):
+    if is_bev(data):
+        return BEV_REVERSE_CONVENTIONS if data.get("market") else BEV_CONVENTIONS
     if is_oplev(data):
         return OPLEV_REVERSE_CONVENTIONS if data.get("market") else OPLEV_CONVENTIONS
     if is_sotp(data):
@@ -185,6 +210,9 @@ def load_json(path):
 
 def method_for(data):
     """Human label for the model type — derivable without running the engine."""
+    if is_bev(data):
+        anchor = data.get("anchor")
+        return "Fixed-cost breakeven" + (f" ({anchor})" if anchor else "")
     if is_oplev(data):
         anchor = data.get("anchor")
         return "Operating leverage — earnings-power bridge" + (f" ({anchor})" if anchor else "")
@@ -753,6 +781,179 @@ def render_oplev_report(symbol, data, date_str, notes=None, snapshot_name=None):
 """
 
 
+# --------------------------------------------------------------------------- #
+# HTML rendering — fixed-cost breakeven report. Same contract as the others:
+# inputs (+ notes) are embedded; docs/assets/breakeven.js fills the numbers
+# client-side. The fair value is derived without any market price.
+#
+# The page leads with where the breakeven line sits, because that is the one
+# figure on it that no revenue forecast touches — it falls out of the cost base
+# alone. Everything after it is a question of which side of that line a given
+# revenue level lands on.
+# --------------------------------------------------------------------------- #
+def render_bev_report(symbol, data, date_str, notes=None, snapshot_name=None):
+    sym = escape(symbol)
+    method = escape(method_for(data))
+    anchor = escape(str(data.get("anchor", "")))
+    notes = notes or {}
+    snapshot_name = snapshot_name or f"{date_str}.json"
+
+    fv_label = f"Fair value{f' \u00b7 {anchor}' if anchor else ''}"
+
+    history_intro = data.get("history_intro") or (
+        "The company's own filed figures. Each period carries its realized cost "
+        "of revenue and opex in dollars, so the breakeven column is simply their "
+        "sum \u2014 and the gap between revenue and it is the operating result."
+    )
+    bridge_intro = data.get("bridge_intro") or (
+        "No gross margin is assumed anywhere in this model. Each case names a "
+        "revenue level; the cost base is carried in dollars; the margin is "
+        "whatever is left over."
+    )
+
+    history_section = ""
+    if data.get("history"):
+        history_section = f"""
+  <section>
+    <h2>2 &middot; The cost base, against revenue</h2>
+    <p class="meta">{escape(history_intro)}</p>
+    <div id="bev-history"></div>
+  </section>
+"""
+
+    sens_section = ""
+    if data.get("sensitivity"):
+        sens_section = """
+  <section>
+    <h2>5 &middot; Where the answer comes from</h2>
+    <p class="meta">Value per share across revenue and the earnings multiple.
+    The flat, greyed region in the lower rows is the method drawn out: below the
+    breakeven line there is no earnings stream for a multiple to act on, so what
+    you would pay for earnings makes no difference at all. Only once revenue
+    clears the cost base does the multiple start to matter \u2014 and then it
+    matters enormously.</p>
+    <div id="bev-sensitivity"></div>
+  </section>
+"""
+
+    # The one section a price may touch, and it runs *backwards*: hold the cost
+    # base, the share count and the multiples, and solve for the revenue the
+    # traded price is asking for. The fair value above is fixed before it runs.
+    market_section = ""
+    if data.get("market"):
+        market_section = """
+  <section>
+    <h2>6 &middot; What the price requires</h2>
+    <p class="meta">Everything above was computed without looking at the market.
+    Here we run the same arithmetic in reverse \u2014 take the traded price as
+    given, hold the cost base, the share count and the multiples at <em>our</em>
+    figures, and solve for the revenue it implies. There are two routes to any
+    given enterprise value, so the model reports both and then the easier of
+    them.</p>
+    <div id="bev-market"></div>
+  </section>
+"""
+
+    act_levels = action_levels(data, "bev-action")
+    act_section = action_section(data, date_str, "bev-action")
+    act_script = action_script(data)
+    notes_script = ""
+    if notes:
+        notes_script = f'\n<script type="application/json" id="bev-notes">{embed_json(notes)}</script>'
+
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{sym} valuation \u2014 {date_str} \u00b7 daily-val</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<main class="wrap">
+  <p class="crumb"><a href="../../index.html">\u2190 All reports</a></p>
+
+  <header class="rpt-head">
+    <div>
+      <h1>{sym} <span class="sub">valuation</span></h1>
+      <p class="meta" id="bev-method">{method}</p>
+    </div>
+    <div class="date-badge">{date_str}</div>
+  </header>
+
+  <section class="fairvalue-band">
+    <span class="fv-label">{fv_label}</span>
+    <span class="fv-value" id="bev-fairvalue">\u2026</span>{act_levels}
+  </section>
+  <noscript><p class="meta">This report computes its valuation in the browser;
+  enable JavaScript to see the numbers.</p></noscript>
+
+  <section>
+    <h2>1 &middot; Where the line sits</h2>
+    <p class="meta">The one number on this page that no forecast touches. The
+    cost of revenue here is engineering capacity and the amortization of
+    capitalized IP \u2014 it does not move with what is sold \u2014 so adding
+    the operating cost base to it gives a revenue level, in dollars, that the
+    business has to reach before it earns anything. Because a large part of that
+    base is non-cash, there are two lines, and the distance between them is the
+    D&amp;A.</p>
+    <div id="bev-breakeven"></div>
+  </section>
+{history_section}
+  <section>
+    <h2>3 &middot; The bridge</h2>
+    <p class="meta">{escape(bridge_intro)}</p>
+    <p class="meta" id="bev-source"></p>
+    <div id="bev-bridge"></div>
+  </section>
+
+  <section>
+    <h2>4 &middot; The cases, weighted</h2>
+    <p class="meta">Revenue, cost base, share count and multiples move together,
+    so each case varies them jointly. The fair value is the probability-weighted
+    value per share across the cases.</p>
+    <div id="bev-scenarios"></div>
+  </section>
+{sens_section}
+  <section>
+    <h2>How good are these inputs?</h2>
+    <p class="meta">One read per input \u2014 what it rests on, and how hard it
+    would be to argue with. The revenue level and the floor multiple are the two
+    that decide this report.</p>
+    <div id="bev-drivers"></div>
+  </section>
+{market_section}{act_section}
+  <section>
+    <h2>Key inputs</h2>
+    <div class="table-scroll">
+      <table class="compact">
+        <tbody id="bev-key-inputs"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="disclaimer">
+    <p><strong>Not investment advice.</strong> A breakeven model is only as good
+    as the revenue level fed into it and the multiple placed on the other side
+    \u2014 and for a business sitting near its own breakeven, small changes in
+    the first move the second a long way, which is exactly why the model shows
+    the cost base in dollars rather than a margin. The valuation is computed in
+    your browser from an embedded input snapshot using the <code>breakeven</code>
+    engine; it is a personal modeling exercise, not a recommendation to buy or
+    sell any security.</p>
+    <p class="meta">{escape(conventions_for(data))}</p>
+    <p class="snapshot">This report is a frozen daily snapshot. &rarr;
+    <a href="{escape(snapshot_name)}">Inputs &amp; evaluation behind this page</a></p>
+    <p class="gen">Generated {date_str} \u00b7 daily-val</p>
+  </footer>
+</main>
+<script type="application/json" id="bev-input">{embed_json(data)}</script>{notes_script}{act_script}
+<script src="../../assets/breakeven.js"></script>
+</body>
+</html>
+"""
+
+
 def render_index(entries):
     # The report list is NOT embedded here. The page reads it at runtime from
     # the reports/manifest.json data file and sorts it (date desc) client-side,
@@ -787,6 +988,7 @@ def render_index(entries):
 <script src="assets/comps.js"></script>
 <script src="assets/sotp.js"></script>
 <script src="assets/opleverage.js"></script>
+<script src="assets/breakeven.js"></script>
 <script src="assets/dcf.js"></script>
 </body>
 </html>
@@ -987,7 +1189,9 @@ def main():
 
     # 2. Write report page (inputs+notes embedded; math runs in the browser).
     #    The input's method selects the engine + template.
-    if is_oplev(data):
+    if is_bev(data):
+        render = render_bev_report
+    elif is_oplev(data):
         render = render_oplev_report
     elif is_sotp(data):
         render = render_sotp_report

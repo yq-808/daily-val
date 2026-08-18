@@ -1,0 +1,59 @@
+{
+  "symbol": "QUIK",
+  "drivers": [
+    {
+      "key": "cost_structure",
+      "label": "The fixed/variable split \u2014 the load-bearing claim",
+      "verdict": "strong evidence",
+      "comment": "This is the one input that has to be right for the method to be the right method, and the qualitative half of it is the best-evidenced thing in the report. Across the eleven quarters QuickLogic has disclosed, revenue ranged from $2.029M to $7.479M \u2014 a factor of 3.7 \u2014 while cost of revenue stayed inside $1.537M to $3.209M. Regressing cost of revenue on revenue over the last ten quarters gives an R-squared of 0.005; over the last six, the most favourable window, 0.41. There is essentially no unit-cost relationship to find. What moves cost of revenue is headcount on eFPGA engagements and the amortization of capitalized IP \u2014 capacity decisions taken a year in advance, not a cost of what was sold. The consequence is that the gross margin is not an assumption anyone at this company makes, which is why no model that takes one as an input belongs on this stock. Where the evidence runs out is the *size* of the variable ratio, and it is not a harmless parameter: at 15% the base case is $7.75, and at zero it is $11.17, because a lower ratio lifts gross profit enough to flip the base case from the revenue floor onto the earnings multiple. The regression cannot distinguish 0% from 15% at this sample size. This report uses 15% deliberately \u2014 it is the assumption that produces the lower value, and with a pipeline this uncertain the conservative end of an unidentified parameter is the right place to sit. A reader who thinks the ratio is really zero should read the fair value as $10.57."
+    },
+    {
+      "key": "cost_base",
+      "label": "The dollar level of the cost base at the anchor",
+      "verdict": "defensible",
+      "comment": "$9.5M fixed cost of revenue plus $17.5M opex, against H1 2026 actuals of $6.284M and $8.084M \u2014 annualizing to $12.6M and $16.2M. At the base case's $32M revenue the model carries $14.3M of cost of revenue, so it is already assuming a $1.7M capacity step above today's run-rate, and $1.3M more opex. The check that matters: run FY2026's guided revenue (~$24.1M) through this cost base and it produces EBITDA of about +$1.3M against an EBIT of about -$5.0M. That is the same thing management said on 11 August \u2014 non-GAAP profitable and cash-flow positive in the second half, still loss-making on GAAP. A cost base calibrated blind to guidance that then reproduces guidance is the strongest test available here."
+    },
+    {
+      "key": "revenue",
+      "label": "The anchor revenue level \u2014 the crux",
+      "verdict": "the crux; weak evidence",
+      "comment": "Everything else in this report is arithmetic on filed figures. This is a forecast of a contract pipeline, and QuickLogic's pipeline has a bad record: FY2025 revenue fell 30.4% to $13.774M after the company had guided to growth, because government and eFPGA contracts slipped. FY2026 is going the other way \u2014 Q2 revenue up 48.7% year on year, full-year guidance narrowed *up* to +70-80%, which implies about $6.8M per quarter in the second half against $5.5M just delivered. What is actually contracted is small: $6.3M of remaining performance obligations expected to be recognized by the end of Q1 2027, plus $0.4M of deferred revenue. Everything above roughly $7M of FY2027 revenue is pipeline, not backlog. The three cases \u2014 $21M, $32M, $42M \u2014 are a repeat of 2025, a normal conversion year, and a repeat of 2026, and there is no basis in the filings for calling one of them more likely than the arithmetic of the weights below."
+    },
+    {
+      "key": "dna",
+      "label": "D&A \u2014 why the two breakevens are $8M apart",
+      "verdict": "strong evidence",
+      "comment": "$6.8M at the anchor, against $5.372M in FY2025, $5.946M trailing, and $3.146M in H1 2026 alone. D&A has gone from $1.004M in FY2022 to $5.9M trailing \u2014 a six-fold rise in four years, as capitalized IP development and mask sets came on stream \u2014 and most of it sits in cost of revenue rather than opex. That single line is why the FY2025 gross margin printed 22.0% and why Q3 2025 printed -23.3%. It is also why this report values on EBITDA rather than EBIT: capex is running at about $2.9M a year against $6.3M of D&A, so EBIT understates the cash the business throws off today. H1 2026 makes the point without any modeling \u2014 a $3.093M net loss and $2.190M of positive operating cash flow in the same six months."
+    },
+    {
+      "key": "multiple",
+      "label": "The revenue floor \u2014 the second-weakest input",
+      "verdict": "judgment; weak evidence",
+      "comment": "The floor multiple decides the bear and base cases outright, because in both of them the earnings multiple has nothing to bite on. It is set at 4.5x forward revenue in the base case against a semiconductor-IP peer group trading at 8.4x (CEVA), 15.6x (Rambus) and 16.9x (Arteris) on trailing revenue, with Lattice at 28.9x and SiTime at 46.9x. So the report is applying roughly a 45% discount to the cheapest credible peer. The discount is for scale (QuickLogic is a fifth of CEVA's revenue), for concentration (88% of revenue is US, much of it government programs), and for the fact that none of those peers has QuickLogic's record of losing money at this level. But it is a judgment, not a measurement: raise every case's floor by two turns \u2014 bear to 5.5x, base to 6.5x, bull to 7.5x \u2014 and the fair value goes from $7.74 to $10.33; raise only the base case's and it goes to $9.18. There is no filed figure that adjudicates it."
+    },
+    {
+      "key": "shares",
+      "label": "Dilution \u2014 an input, not a constant",
+      "verdict": "defensible",
+      "comment": "This is the one place the method deliberately breaks with the other four, which all divide by a single fixed share count. QuickLogic funds itself with equity: shares outstanding went from 14.422M in March 2024 to 18.316M in June 2026, a 27% rise in nine quarters, and in the first half of 2026 alone it raised $9.8M from investors, with a $20M amended ATM and a $125M shelf still available. At 28 December 2025, before that raise, cash was $18.842M against $15.0M drawn on the revolver \u2014 the balance sheet was nearly empty. So the share count at the anchor is a function of how the revenue case goes, and it is set that way here: 21.5M in the bear case, 20.0M in the base, 19.5M in the bull, from 18.316M today. That spread costs the bear case about 10% of its per-share value, which is the honest cost of financing a year of losses and belongs in the model rather than in a footnote."
+    },
+    {
+      "key": "net_cash",
+      "label": "Net cash",
+      "verdict": "filed",
+      "comment": "$10.907M: cash of $18.475M less the $5.0M drawn on the Sunflower Bank revolving facility and $2.568M of notes payable, all at 28 June 2026. Held flat across the cases on the assumption that each case's equity issuance roughly funds that case's cash burn \u2014 which is why the cost of the burn shows up in the share count above rather than here. Note that the cash figure is itself recent and financed: it includes the $5.0M revolver advance and $9.5M net of stock sales during the first half."
+    },
+    {
+      "key": "history",
+      "label": "The filed record",
+      "verdict": "filed",
+      "comment": "FY2022-FY2025 from the 10-Ks, the trailing row from the four quarters to 28 June 2026. Cost of revenue and opex are as filed; the breakeven column is simply their sum, so the gap between revenue and it reconciles exactly to reported operating income in every row. The row that carries the argument is FY2023: revenue $21.198M against a $21.128M cost base, and reported EBIT of +$70K. That is the only year in the last ten in which this company covered its own costs, and the method reproduces it to within a rounding error without being fitted to it."
+    },
+    {
+      "key": "probability",
+      "label": "The weights \u2014 where most of the answer actually is",
+      "verdict": "the weakest input",
+      "comment": "The cases run $3.93 to $14.41, a 3.7x spread, so the weights do more work than any single figure in the model. At 35/45/20 the fair value is $7.74. Shift ten points from bear to bull and it goes to $8.79; shift ten points the other way and it goes to $6.69. Put another way, the weights alone span a range roughly as wide as the entire disagreement about the floor multiple. There is no defensible basis for precision here: the argument for weighting bear at 35% is that 2025 happened exactly that way and is the only completed pipeline cycle we have; the argument against is that 2026 is tracking well ahead of it and management has narrowed guidance upward rather than down. Both are one observation each. This is why the action band takes the bear case itself as its accumulate level rather than a fraction of a weighted value these weights produced."
+    }
+  ]
+}

@@ -1240,5 +1240,155 @@
         ]
       }
     }
+  },
+  {
+    "symbol": "QUIK",
+    "date": "2026-08-18",
+    "method": "Fixed-cost breakeven (FY2027)",
+    "path": "reports/quik/2026-08-18.html",
+    "snapshot": "reports/quik/2026-08-18.json",
+    "input": {
+      "symbol": "QUIK",
+      "method": "breakeven",
+      "anchor": "FY2027",
+      "history_intro": "QuickLogic's cost of revenue is not a cost of goods. It is engineering capacity and the amortization of capitalized IP, and it sits still while revenue swings. Over the eleven quarters the company has disclosed, revenue ranged from $2.0M to $7.5M while cost of revenue stayed inside $1.5M-$3.2M; regressing one on the other gives an R-squared of 0.005. That is why the gross margin below runs from -23% to +77% without anyone at the company deciding anything about margin. In this table the breakeven revenue is simply that year's own cost base in dollars, and the gap between revenue and it is the operating result.",
+      "bridge_intro": "No gross margin is assumed anywhere in this model. Each case names a revenue level; the cost of revenue is a fixed dollar block plus a small genuinely variable share, and the margin is whatever is left. The cost base is calibrated to the 2025-H1'26 regime, in which the company carried roughly $12.6M of annualized cost of revenue against $21M of annualized revenue.",
+      "figures_source": "Cost base calibrated from the FY2025 and H1 2026 filed figures (10-K filed 2026-03-27; 10-Q filed 2026-08-12). At FY2026's guided revenue the calibration reproduces the company's own statement that H2 2026 would be cash-flow positive. Balance sheet at 2026-06-28: cash $18.475M, revolver $5.0M, notes payable $2.568M.",
+      "cost_base": {
+        "variable_ratio": 0.15,
+        "fixed_cost_of_revenue": "9.5M",
+        "opex": "17.5M",
+        "dna": "6.8M",
+        "other_income": "-0.4M"
+      },
+      "balance_sheet": {
+        "net_cash": "10.907M",
+        "diluted_shares": "20.0M",
+        "shares_outstanding": "18.316M"
+      },
+      "multiple": {
+        "earnings": {
+          "kind": "ev_ebitda",
+          "value": 18
+        },
+        "floor": {
+          "kind": "ev_sales",
+          "value": 4.5
+        }
+      },
+      "history": [
+        {
+          "period": "FY2022",
+          "revenue": "12.685M",
+          "cost_of_revenue": "5.266M",
+          "opex": "14.935M",
+          "dna": "1.004M",
+          "note": "58.5% gross margin on $12.7M of revenue - the same cost base that would later produce 22% on $13.8M."
+        },
+        {
+          "period": "FY2023",
+          "revenue": "21.198M",
+          "cost_of_revenue": "6.711M",
+          "opex": "14.417M",
+          "dna": "1.807M",
+          "note": "The one year revenue cleared the cost base. EBIT +$70K on $21.2M - and the breakeven column says $21.1M, which is the whole method in one row."
+        },
+        {
+          "period": "FY2024",
+          "revenue": "19.651M",
+          "cost_of_revenue": "7.558M",
+          "opex": "14.613M",
+          "dna": "3.976M"
+        },
+        {
+          "period": "FY2025",
+          "revenue": "13.774M",
+          "cost_of_revenue": "10.740M",
+          "opex": "14.953M",
+          "dna": "5.372M",
+          "note": "Revenue fell $5.9M and cost of revenue rose $3.2M in the same year. Gross margin printed 22.0%, and Q3 printed -23.3%, without any change in what the company sells or how it prices it."
+        },
+        {
+          "period": "TTM to Q2'26",
+          "revenue": "16.295M",
+          "cost_of_revenue": "11.843M",
+          "opex": "15.703M",
+          "dna": "5.946M",
+          "note": "Trailing four quarters through 2026-06-28. D&A has gone from $1.0M to $5.9M in four years as capitalized IP and mask sets came on stream; most of it sits in cost of revenue, which is why the gap between the EBIT and EBITDA breakevens is now nearly $6M wide."
+        }
+      ],
+      "scenarios": [
+        {
+          "name": "Bear",
+          "probability": 0.35,
+          "revenue": "21M",
+          "cost_base": {
+            "variable_ratio": 0.15,
+            "fixed_cost_of_revenue": "9M",
+            "opex": "16.5M",
+            "dna": "6.3M"
+          },
+          "shares": "21.5M",
+          "multiple": {
+            "earnings": 14,
+            "floor": 3.5
+          },
+          "comment": "2025 repeats: the government and eFPGA contracts that drove the 2026 ramp finish and the next tranche slips a year, so revenue steps back down from the ~$27M Q4'26 exit rate. EBITDA goes back below the line, the earnings multiple has nothing to bite on, and the franchise floor is the whole value. Shares carry the ATM they would have to run to fund it."
+        },
+        {
+          "name": "Base",
+          "probability": 0.45,
+          "revenue": "32M",
+          "shares": "20M",
+          "comment": "The eFPGA pipeline converts at a normal rate: +33% on FY2026's guided ~$24M, roughly +18% on the Q4'26 exit run-rate. Gross margin lands in the mid-50s purely from absorption, EBIT crosses zero for the second time in the company's history, and EBITDA reaches ~$7M. Note that the revenue floor still binds at these multiples - even in the base case this is not yet an earnings stock."
+        },
+        {
+          "name": "Bull",
+          "probability": 0.2,
+          "revenue": "42M",
+          "cost_base": {
+            "variable_ratio": 0.15,
+            "fixed_cost_of_revenue": "10.5M",
+            "opex": "19M",
+            "dna": "7.3M"
+          },
+          "shares": "19.5M",
+          "multiple": {
+            "earnings": 20,
+            "floor": 5.5
+          },
+          "comment": "FY2026's 70-80% growth repeats once: Intel 18A and the rad-hard defense programs move from development contracts to volume, and the architectural-license model starts producing royalties. Cost base steps up to deliver it, but revenue outruns it by enough that EBITDA reaches $13.5M and the earnings multiple finally takes over from the floor."
+        }
+      ],
+      "sensitivity": {
+        "revenue": [
+          "21M",
+          "24M",
+          "28M",
+          "32M",
+          "36M",
+          "42M"
+        ],
+        "earnings_multiple": [
+          10,
+          14,
+          18,
+          22,
+          26
+        ]
+      },
+      "market": {
+        "price": 12.63,
+        "as_of": "2026-08-17",
+        "solve_from": "Base",
+        "commentary": "At $12.63 the equity is $231M and the enterprise value $220M - against $16.3M of trailing revenue and a company that has cleared its own cost base in exactly one year out of the last ten. The two routes to that number are a 6.9x multiple on our base-case FY2027 revenue, or a 31x multiple on our base-case FY2027 EBITDA. Read as a revenue requirement, the price is asking for FY2027 revenue of about $38M - roughly the bull case, one year out, with no slippage."
+      },
+      "action": {
+        "confidence": "low",
+        "buy_below": "Bear",
+        "rationale": "The two inputs that decide this report are the anchor revenue level and the floor multiple, and both rest on judgment rather than filed figures: revenue is a contract pipeline whose last full year fell 30% after being guided up, and the 4.5x floor is set off a peer group (CEVA 8.4x, Arteris 16.9x, Rambus 15.6x sales) whose members are two to forty times QuickLogic's size and none of which is loss-making at this scale. The cases run $3.93 to $14.41 - a 3.7x spread - so a fraction of the weighted value would mostly be a statement about the weights. The accumulate level is therefore the bear case itself, which is the one number in the report that does not depend on the pipeline converting.",
+        "review": "Q3 2026 revenue comes in at or above the ~$6.8M the full-year guidance implies, and the company names the FY2027 contracts behind it - or it misses, and the 2025 pattern is confirmed as the base rate rather than the exception."
+      }
+    }
   }
 ]

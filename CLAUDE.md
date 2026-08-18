@@ -8,11 +8,11 @@ commands, worked examples and the action-band spec belong to
 `skills/<method>/SKILL.md` and `skills/shared/`. This file is the short list of
 rules a report must not break, whichever method it uses.
 
-## Four valuation methods, one pipeline
+## Five valuation methods, one pipeline
 
 Each report's input carries a **method**; the generator and the shared landing
 page dispatch on it. Same snapshot rules, same "generator does no math", and in
-all four the fair value is derived without reference to any market price.
+all five the fair value is derived without reference to any market price.
 
 - **DCF** (default, no `method` field) — FCFF. For durable compounders.
 - **Relative comps** (`"method": "comps"`) — peer/re-rating multiples on a
@@ -36,6 +36,25 @@ all four the fair value is derived without reference to any market price.
   the leverage away, which is the error the method exists to prevent — and always
   carry a `history[]` of filed actuals, run through the same bridge, so an
   assumed margin is read against every margin the company has actually earned.
+- **Fixed-cost breakeven** (`"method": "breakeven"`) — the gross margin is
+  *derived*: a revenue level meets a cost base carried in dollars, and what is
+  left over is the margin. For companies whose cost of revenue is capacity
+  rather than goods — engineering booked to projects, amortization of
+  capitalized IP — so that the margin is a consequence of the revenue level and
+  not a decision (e.g. QUIK: eleven quarters in which revenue swung 3.7× while
+  cost of revenue moved 13%, and gross margin ran from −23% to +77%). Test for
+  it before choosing it: regress filed cost of revenue on filed revenue and
+  check the R-squared is near zero. Each case is valued on the higher of an
+  earnings multiple and a revenue floor, and the switch must fall out of the
+  arithmetic rather than be chosen. Unlike the other four, the **share count is
+  a per-case input** — a company below its own breakeven funds the gap by
+  issuing stock, so holding shares fixed across a bear case hides the cost of
+  the losses.
+
+`breakeven` and `opleverage` are close neighbours and are chosen apart on one
+question: is the gross margin a judgment (`opleverage`) or a consequence
+(`breakeven`)? A second tell — `opleverage` ends at a P/E and so needs positive
+earnings in every case; `breakeven` does not.
 
 | Method | Skill (how to build one) | Engine | Inputs |
 |--------|--------------------------|--------|--------|
@@ -43,8 +62,9 @@ all four the fair value is derived without reference to any market price.
 | Comps | `skills/relative-comps/SKILL.md` | `docs/assets/comps.js` | `skills/relative-comps/reference/` |
 | SOTP | `skills/sum-of-the-parts/SKILL.md` | `docs/assets/sotp.js` | `skills/sum-of-the-parts/reference/` |
 | Op leverage | `skills/operating-leverage/SKILL.md` | `docs/assets/opleverage.js` | `skills/operating-leverage/reference/` |
+| Breakeven | `skills/breakeven/SKILL.md` | `docs/assets/breakeven.js` | `skills/breakeven/reference/` |
 
-Shared across all four: the action band — `skills/shared/action-band.md`,
+Shared across all five: the action band — `skills/shared/action-band.md`,
 engine `docs/assets/action.js`.
 
 The generator resolves `<SYM>.json` from any reference root; the input's
@@ -89,6 +109,9 @@ change when the shared reference JSON is later updated.
   qualify: **implied expectations** (`market` + `expectations`, or
   `market.solve_for` on a `sotp`), which runs the model backwards — price in,
   required assumption out — and the **reasoning** half of the action band.
+  A reverse solve reads the price against the share count that exists **today**,
+  never a forward or post-dilution count — otherwise it credits the market with
+  dilution that has not happened.
 - The action band's two **levels** are the one exception to "after the
   valuation", and only because no price is involved in them: they are a fraction
   of the report's own fair value, so they render beside it at the top. Which side
